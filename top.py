@@ -3,6 +3,9 @@ from typing import List, Dict, Set, Optional, Tuple
 from dataclasses import dataclass
 import heapq
 from collections import defaultdict
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import numpy as np
 
 class ResourceType(Enum):
     """资源类型枚举"""
@@ -311,40 +314,200 @@ class MultiResourceScheduler:
         
         return utilization
     
-    def print_schedule_summary(self):
-        """打印调度摘要"""
-        print("=== 调度摘要 ===")
-        print(f"NPU资源数: {len(self.resources[ResourceType.NPU])}")
-        print(f"DSP资源数: {len(self.resources[ResourceType.DSP])}")
-        print(f"任务总数: {len(self.tasks)}")
-        print(f"已调度次数: {len(self.schedule_history)}")
+    def plot_task_overview(self, selected_bw: float = 4.0):
+        """Plot task overview showing resource requirements and performance needs"""
+        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10))
         
-        # 统计每个任务的调度情况
-        task_schedule_count = defaultdict(int)
-        task_latencies = defaultdict(list)
+        # 准备数据
+        task_ids = []
+        task_names = []
+        fps_requirements = []
+        latency_requirements = []
+        task_durations = []
+        task_types = []  # NPU-only or DSP+NPU
+        dependencies_str = []
         
-        for schedule in self.schedule_history:
-            task_schedule_count[schedule.task_id] += 1
-            task_latencies[schedule.task_id].append(schedule.actual_latency)
-        
-        print("\n任务调度详情:")
         for task_id, task in self.tasks.items():
-            count = task_schedule_count[task_id]
-            avg_latency = sum(task_latencies[task_id]) / len(task_latencies[task_id]) if task_latencies[task_id] else 0
-            achieved_fps = count / (self.schedule_history[-1].end_time / 1000) if self.schedule_history else 0
+            task_ids.append(task_id)
+            task_names.append(task.name)
+            fps_requirements.append(task.fps_requirement)
+            latency_requirements.append(task.latency_requirement)
             
-            print(f"  {task}: ")
-            print(f"    调度次数: {count}")
-            print(f"    平均延时: {avg_latency:.1f}ms (需求: {task.latency_requirement}ms)")
-            print(f"    实现FPS: {achieved_fps:.1f} (需求: {task.fps_requirement})")
+            # 计算在选定带宽下的执行时间
+            resource_bw_map = {ResourceType.NPU: selected_bw, ResourceType.DSP: selected_bw}
+            duration = task.get_total_duration(resource_bw_map)
+            task_durations.append(duration)
+            
+            # 确定任务类型
+            if task.uses_dsp and task.uses_npu:
+                task_types.append('DSP+NPU')
+            elif task.uses_npu:
+                task_types.append('NPU-only')
+            else:
+                task_types.append('DSP-only')
+            
+            # 依赖关系
+            dep_str = ','.join(task.dependencies) if task.dependencies else 'None'
+            dependencies_str.append(dep_str)
         
-        # 资源利用率
-        if self.schedule_history:
-            time_window = self.schedule_history[-1].end_time
-            utilization = self.get_resource_utilization(time_window)
-            print("\n资源利用率:")
-            for resource_id, util in utilization.items():
-                print(f"  {resource_id}: {util:.1f}%")
+        # 图1：任务性能需求
+        x = np.arange(len(task_ids))
+        width = 0.35
+        
+        bars1 = ax1.bar(x - width/2, fps_requirements, width, label='FPS Requirement', color='skyblue')
+        bars2 = ax1.bar(x + width/2, latency_requirements, width, label='Latency Requirement (ms)', color='lightcoral')
+        
+        ax1.set_xlabel('Task')
+        ax1.set_ylabel('Value')
+        ax1.set_title(f'Task Performance Requirements Overview (BW={selected_bw})')
+        ax1.set_xticks(x)
+        ax1.set_xticklabels([f'{tid}\n{name}' for tid, name in zip(task_ids, task_names)], rotation=45, ha='right')
+        ax1.legend()
+        ax1.grid(True, alpha=0.3)
+        
+        # 在柱子上添加数值
+        for bar in bars1:
+            height = bar.get_height()
+            ax1.text(bar.get_x() + bar.get_width()/2., height,
+                    f'{height:.0f}', ha='center', va='bottom', fontsize=8)
+        for bar in bars2:
+            height = bar.get_height()
+            ax1.text(bar.get_x() + bar.get_width()/2., height,
+                    f'{height:.0f}', ha='center', va='bottom', fontsize=8)
+        
+        # 图2：任务执行时间和类型
+        colors = {'NPU-only': 'green', 'DSP+NPU': 'orange', 'DSP-only': 'blue'}
+        bar_colors = [colors.get(t, 'gray') for t in task_types]
+        
+        bars3 = ax2.bar(x, task_durations, color=bar_colors)
+        
+        ax2.set_xlabel('Task')
+        ax2.set_ylabel('Execution Time (ms)')
+        ax2.set_title(f'Task Execution Time and Resource Type (BW={selected_bw})')
+        ax2.set_xticks(x)
+        ax2.set_xticklabels([f'{tid}\n{dep}' for tid, dep in zip(task_ids, dependencies_str)], 
+                           rotation=45, ha='right')
+        
+        # 添加图例
+        legend_elements = [patches.Patch(color=color, label=task_type) 
+                          for task_type, color in colors.items()]
+        ax2.legend(handles=legend_elements, loc='upper right')
+        ax2.grid(True, alpha=0.3)
+        
+        # 在柱子上添加数值
+        for bar, duration in zip(bars3, task_durations):
+            height = bar.get_height()
+            ax2.text(bar.get_x() + bar.get_width()/2., height,
+                    f'{duration:.1f}', ha='center', va='bottom', fontsize=8)
+        
+        plt.tight_layout()
+        plt.show()
+    
+    def plot_pipeline_schedule(self, time_window: float = None, show_first_n: int = None):
+        """Plot pipeline schedule Gantt chart"""
+        if not self.schedule_history:
+            print("No schedule history, please run scheduling algorithm first")
+            return
+        
+        # 确定时间窗口
+        if time_window is None:
+            time_window = max(s.end_time for s in self.schedule_history) * 1.1
+        
+        # 准备资源列表
+        all_resources = []
+        resource_types = []
+        for res_type in [ResourceType.NPU, ResourceType.DSP]:
+            for resource in self.resources[res_type]:
+                all_resources.append(resource.unit_id)
+                resource_types.append(res_type.value)
+        
+        # 创建资源索引映射
+        resource_to_y = {res_id: i for i, res_id in enumerate(all_resources)}
+        
+        # 准备颜色映射（每个任务一个颜色）
+        task_colors = {}
+        color_palette = plt.cm.Set3(np.linspace(0, 1, len(self.tasks)))
+        for i, task_id in enumerate(self.tasks.keys()):
+            task_colors[task_id] = color_palette[i]
+        
+        # 创建图形
+        fig, ax = plt.subplots(figsize=(14, max(6, len(all_resources) * 0.8)))
+        
+        # 绘制调度块
+        schedules_to_plot = self.schedule_history[:show_first_n] if show_first_n else self.schedule_history
+        
+        for schedule in schedules_to_plot:
+            task = self.tasks[schedule.task_id]
+            
+            # 对于每个任务段，绘制相应的资源占用
+            for seg in task.segments:
+                if seg.resource_type in schedule.assigned_resources:
+                    resource_id = schedule.assigned_resources[seg.resource_type]
+                    if resource_id in resource_to_y:
+                        y_pos = resource_to_y[resource_id]
+                        
+                        # 计算该段的实际执行时间
+                        resource_unit = next((r for r in self.resources[seg.resource_type] 
+                                            if r.unit_id == resource_id), None)
+                        if resource_unit:
+                            duration = seg.get_duration(resource_unit.bandwidth)
+                            start_time = schedule.start_time + seg.start_time
+                            
+                            # 绘制矩形
+                            rect = patches.Rectangle(
+                                (start_time, y_pos - 0.4), duration, 0.8,
+                                linewidth=1, edgecolor='black',
+                                facecolor=task_colors[schedule.task_id],
+                                alpha=0.8
+                            )
+                            ax.add_patch(rect)
+                            
+                            # 添加任务标签
+                            if duration > 5:  # 只在足够宽的块上添加标签
+                                ax.text(start_time + duration/2, y_pos,
+                                       f'{task.task_id}', 
+                                       ha='center', va='center', fontsize=8,
+                                       weight='bold')
+        
+        # 设置坐标轴
+        ax.set_ylim(-0.5, len(all_resources) - 0.5)
+        ax.set_xlim(0, time_window)
+        ax.set_yticks(range(len(all_resources)))
+        ax.set_yticklabels([f'{res_id}\n({res_type})' for res_id, res_type 
+                           in zip(all_resources, resource_types)])
+        ax.set_xlabel('Time (ms)')
+        ax.set_ylabel('Resource')
+        ax.set_title('Task Scheduling Gantt Chart')
+        ax.grid(True, axis='x', alpha=0.3)
+        
+        # 添加资源类型分隔线
+        current_type = resource_types[0]
+        for i, res_type in enumerate(resource_types[1:], 1):
+            if res_type != current_type:
+                ax.axhline(y=i-0.5, color='red', linestyle='--', linewidth=2)
+                current_type = res_type
+        
+        # 添加图例
+        legend_elements = []
+        for task_id, task in self.tasks.items():
+            legend_elements.append(
+                patches.Patch(color=task_colors[task_id], 
+                            label=f'{task_id}: {task.name}')
+            )
+        ax.legend(handles=legend_elements, loc='center left', bbox_to_anchor=(1, 0.5))
+        
+        # Add resource utilization info
+        utilization = self.get_resource_utilization(time_window)
+        util_text = "Resource Utilization:\n"
+        for res_id, util in utilization.items():
+            util_text += f"{res_id}: {util:.1f}%\n"
+        
+        ax.text(1.02, 0.02, util_text, transform=ax.transAxes, 
+               fontsize=9, verticalalignment='bottom',
+               bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+        
+        plt.tight_layout()
+        plt.show()
 
 
 # 使用示例
@@ -401,16 +564,24 @@ if __name__ == "__main__":
         task.set_performance_requirements(fps=10+i, latency=100)
         scheduler.add_task(task)
     
-    # 执行调度
-    print("开始调度...")
+    # Execute scheduling
+    print("Starting scheduling...")
     schedule_results = scheduler.simple_schedule(time_window=500.0)
     
-    # 打印结果
-    scheduler.print_schedule_summary()
+    # Print results
+    # scheduler.print_schedule_summary()
     
-    # 打印前10个调度事件
-    print("\n前10个调度事件:")
+    # Plot task overview
+    print("\nPlotting task overview...")
+    scheduler.plot_task_overview(selected_bw=4.0)
+    
+    # Plot scheduling Gantt chart
+    print("\nPlotting scheduling Gantt chart...")
+    scheduler.plot_pipeline_schedule(time_window=200.0)  # Show first 200ms
+    
+    # Print first 10 scheduling events
+    print("\nFirst 10 scheduling events:")
     for i, schedule in enumerate(schedule_results[:10]):
         task = scheduler.tasks[schedule.task_id]
         print(f"{i+1}. {task.name} @ {schedule.start_time:.1f}-{schedule.end_time:.1f}ms, "
-              f"使用资源: {list(schedule.assigned_resources.values())}")
+              f"Resources used: {list(schedule.assigned_resources.values())}")
