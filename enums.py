@@ -15,3 +15,8 @@ class TaskPriority(Enum):
     def __lt__(self, other):
         """Enable priority comparison"""
         return self.value < other.value
+
+class RuntimeType(Enum):
+    """Runtime configuration types"""
+    DSP_RUNTIME = "DSP_Runtime"      # DSP and NPU are coupled/bound together
+    ACPU_RUNTIME = "ACPU_Runtime"    # Default runtime, segments can be pipelined

@@ -1,14 +1,16 @@
 from typing import List, Dict, Set, Optional, Tuple
-from enums import ResourceType, TaskPriority
+from enums import ResourceType, TaskPriority, RuntimeType
 from models import ResourceSegment, TaskScheduleInfo
 
 class NNTask:
-    """Neural network task class"""
+    """Neural network task class with runtime configuration support"""
     
-    def __init__(self, task_id: str, name: str = "", priority: TaskPriority = TaskPriority.NORMAL):
+    def __init__(self, task_id: str, name: str = "", priority: TaskPriority = TaskPriority.NORMAL, 
+                 runtime_type: RuntimeType = RuntimeType.ACPU_RUNTIME):
         self.task_id = task_id
         self.name = name or f"Task_{task_id}"
         self.priority = priority  # Task priority level
+        self.runtime_type = runtime_type  # Runtime configuration
         self.segments: List[ResourceSegment] = []
         self.dependencies: Set[str] = set()
         self.fps_requirement: float = 30.0
@@ -39,6 +41,10 @@ class NNTask:
         self.fps_requirement = fps
         self.latency_requirement = latency
     
+    def set_runtime_type(self, runtime_type: RuntimeType):
+        """Set runtime configuration type"""
+        self.runtime_type = runtime_type
+    
     def get_total_duration(self, resource_bw_map: Dict[ResourceType, float]) -> float:
         """Get total execution time based on assigned resource bandwidths"""
         if not self.segments:
@@ -49,6 +55,11 @@ class NNTask:
             end_time = seg.start_time + seg.get_duration(bw)
             max_end_time = max(max_end_time, end_time)
         return max_end_time
+    
+    def requires_resource_binding(self) -> bool:
+        """Check if task requires resource binding (DSP_Runtime with multiple resource types)"""
+        return (self.runtime_type == RuntimeType.DSP_RUNTIME and 
+                len(set(seg.resource_type for seg in self.segments)) > 1)
     
     @property
     def min_interval_ms(self) -> float:
@@ -65,4 +76,4 @@ class NNTask:
     
     def __repr__(self):
         sched_str = f", scheduled@{self.schedule_info.start_time:.1f}ms" if self.schedule_info else ""
-        return f"Task{self.task_id}({self.name}, priority={self.priority.name}, fps={self.fps_requirement}{sched_str})"
+        return f"Task{self.task_id}({self.name}, {self.runtime_type.value}, priority={self.priority.name}, fps={self.fps_requirement}{sched_str})"

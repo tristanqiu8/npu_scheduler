@@ -1,12 +1,12 @@
-from typing import List, Dict
+from typing import List, Dict, Set, Optional
 from collections import defaultdict
-from enums import ResourceType, TaskPriority
-from models import ResourceUnit, TaskScheduleInfo
+from enums import ResourceType, TaskPriority, RuntimeType
+from models import ResourceUnit, TaskScheduleInfo, ResourceBinding
 from task import NNTask
 from priority_queue import ResourcePriorityQueues
 
 class MultiResourceScheduler:
-    """Multi-resource scheduler with priority queue support"""
+    """Multi-resource scheduler with runtime configuration support"""
     
     def __init__(self):
         self.tasks: Dict[str, NNTask] = {}
@@ -17,6 +17,8 @@ class MultiResourceScheduler:
         # Priority queues for each resource
         self.resource_queues: Dict[str, ResourcePriorityQueues] = {}
         self.schedule_history: List[TaskScheduleInfo] = []
+        # Track resource bindings for DSP_Runtime tasks
+        self.active_bindings: List[ResourceBinding] = []
         
     def add_npu(self, npu_id: str, bandwidth: float):
         """Add NPU resource"""
@@ -34,17 +36,137 @@ class MultiResourceScheduler:
         """Add task"""
         self.tasks[task.task_id] = task
     
-    def priority_aware_schedule(self, time_window: float = 1000.0) -> List[TaskScheduleInfo]:
-        """Priority-aware scheduling algorithm
+    def cleanup_expired_bindings(self, current_time: float):
+        """Clean up expired resource bindings"""
+        # Remove expired bindings
+        self.active_bindings = [binding for binding in self.active_bindings 
+                               if binding.binding_end > current_time]
         
-        Key features:
-        - Each resource maintains separate queues for each priority level
-        - Higher priority tasks must complete before lower priority tasks
-        - Tasks are distributed to resources that can execute them
-        """
+        # Release resource bindings
+        for queue in self.resource_queues.values():
+            if queue.bound_until <= current_time:
+                queue.release_binding()
+    
+    def find_available_resources_for_task(self, task: NNTask, current_time: float) -> Optional[Dict[ResourceType, str]]:
+        """Find available resources for a task based on its runtime type"""
+        if task.runtime_type == RuntimeType.DSP_RUNTIME and task.requires_resource_binding():
+            # For DSP_Runtime with multiple resource types, find resources that can be bound together
+            return self.find_bound_resources(task, current_time)
+        else:
+            # For ACPU_Runtime or single-resource DSP_Runtime, use normal scheduling
+            return self.find_pipelined_resources(task, current_time)
+    
+    def find_bound_resources(self, task: NNTask, current_time: float) -> Optional[Dict[ResourceType, str]]:
+        """Find resources that can be bound together for DSP_Runtime tasks"""
+        required_resource_types = set(seg.resource_type for seg in task.segments)
+        
+        # Check all combinations of resources to find a set that can be bound together
+        for resource_combo in self.get_resource_combinations(required_resource_types):
+            can_bind_all = True
+            binding_start = current_time
+            binding_end = current_time
+            
+            # Check if all resources in this combination are available
+            for resource_type, resource_id in resource_combo.items():
+                queue = self.resource_queues[resource_id]
+                
+                # Check if resource is available and not bound to another task
+                if (queue.is_bound_to_other_task(task.task_id, current_time) or
+                    queue.has_higher_priority_tasks(task.priority, current_time, task.task_id)):
+                    can_bind_all = False
+                    break
+                
+                # Calculate binding times
+                binding_start = max(binding_start, queue.available_time)
+            
+            if can_bind_all:
+                # Calculate total binding duration
+                for seg in task.segments:
+                    if seg.resource_type in resource_combo:
+                        resource_id = resource_combo[seg.resource_type]
+                        resource = next(r for r in self.resources[seg.resource_type] 
+                                      if r.unit_id == resource_id)
+                        seg_end = binding_start + seg.start_time + seg.get_duration(resource.bandwidth)
+                        binding_end = max(binding_end, seg_end)
+                
+                # Bind all resources
+                bound_resource_ids = set(resource_combo.values())
+                for resource_id in bound_resource_ids:
+                    self.resource_queues[resource_id].bind_resource(task.task_id, binding_end)
+                
+                # Record binding
+                binding = ResourceBinding(
+                    task_id=task.task_id,
+                    bound_resources=bound_resource_ids,
+                    binding_start=binding_start,
+                    binding_end=binding_end
+                )
+                self.active_bindings.append(binding)
+                
+                return resource_combo
+        
+        return None
+    
+    def find_pipelined_resources(self, task: NNTask, current_time: float) -> Optional[Dict[ResourceType, str]]:
+        """Find resources for ACPU_Runtime tasks (normal pipelined scheduling)"""
+        assigned_resources = {}
+        earliest_start = current_time
+        
+        # Check resource availability for all segments
+        for seg in task.segments:
+            best_resource = None
+            best_start_time = float('inf')
+            
+            # Find best resource for this segment
+            for resource in self.resources[seg.resource_type]:
+                queue = self.resource_queues[resource.unit_id]
+                
+                # Check if higher priority tasks are waiting or resource is bound
+                if (queue.has_higher_priority_tasks(task.priority, current_time, task.task_id) or
+                    queue.is_bound_to_other_task(task.task_id, current_time)):
+                    continue
+                
+                # Calculate when this resource could start this task
+                resource_start = max(queue.available_time, earliest_start + seg.start_time)
+                
+                if resource_start < best_start_time:
+                    best_start_time = resource_start
+                    best_resource = resource
+            
+            if best_resource:
+                assigned_resources[seg.resource_type] = best_resource.unit_id
+                earliest_start = max(earliest_start, best_start_time - seg.start_time)
+            else:
+                return None
+        
+        return assigned_resources
+    
+    def get_resource_combinations(self, required_types: Set[ResourceType]) -> List[Dict[ResourceType, str]]:
+        """Get all possible combinations of resources for the required types"""
+        combinations = []
+        
+        def generate_combinations(types_list, current_combo, index):
+            if index == len(types_list):
+                combinations.append(current_combo.copy())
+                return
+            
+            resource_type = types_list[index]
+            for resource in self.resources[resource_type]:
+                current_combo[resource_type] = resource.unit_id
+                generate_combinations(types_list, current_combo, index + 1)
+                del current_combo[resource_type]
+        
+        if required_types:
+            generate_combinations(list(required_types), {}, 0)
+        
+        return combinations
+    
+    def priority_aware_schedule(self, time_window: float = 1000.0) -> List[TaskScheduleInfo]:
+        """Priority-aware scheduling algorithm with runtime configuration support"""
         # Reset scheduling state
         for queue in self.resource_queues.values():
             queue.available_time = 0.0
+            queue.release_binding()
             for p in TaskPriority:
                 queue.queues[p].clear()
         
@@ -54,12 +176,16 @@ class MultiResourceScheduler:
             task.ready_time = 0
         
         self.schedule_history.clear()
+        self.active_bindings.clear()
         
         # Track task execution counts for FPS calculation
         task_execution_count = defaultdict(int)
         current_time = 0.0
         
         while current_time < time_window:
+            # Clean up expired bindings
+            self.cleanup_expired_bindings(current_time)
+            
             # Phase 1: Check which tasks are ready (dependencies satisfied)
             for task in self.tasks.values():
                 # Skip if task was recently executed
@@ -82,50 +208,22 @@ class MultiResourceScheduler:
                 if deps_satisfied:
                     task.ready_time = max(current_time, max_dep_end_time)
             
-            # Phase 2: Distribute ready tasks to appropriate resource queues
+            # Phase 2: Schedule ready tasks
             scheduled_any = False
             
             for task in self.tasks.values():
                 if (task.ready_time <= current_time and 
                     task.last_execution_time + task.min_interval_ms <= current_time):
                     
-                    # Try to schedule this task
-                    assigned_resources = {}
-                    can_schedule = True
-                    earliest_start = current_time
+                    # Try to find available resources based on runtime type
+                    assigned_resources = self.find_available_resources_for_task(task, current_time)
                     
-                    # Check resource availability for all segments
-                    for seg in task.segments:
-                        best_resource = None
-                        best_start_time = float('inf')
-                        
-                        # Find best resource for this segment
-                        for resource in self.resources[seg.resource_type]:
-                            queue = self.resource_queues[resource.unit_id]
-                            
-                            # Check if higher priority tasks are waiting
-                            if queue.has_higher_priority_tasks(task.priority, current_time):
-                                continue
-                            
-                            # Calculate when this resource could start this task
-                            resource_start = max(queue.available_time, earliest_start + seg.start_time)
-                            
-                            if resource_start < best_start_time:
-                                best_start_time = resource_start
-                                best_resource = resource
-                        
-                        if best_resource:
-                            assigned_resources[seg.resource_type] = best_resource.unit_id
-                            earliest_start = max(earliest_start, best_start_time - seg.start_time)
-                        else:
-                            can_schedule = False
-                            break
-                    
-                    if can_schedule:
+                    if assigned_resources:
                         # Execute the scheduling
-                        actual_start = earliest_start
+                        actual_start = current_time
                         actual_end = actual_start
                         
+                        # Update resource availability times
                         for seg in task.segments:
                             resource_id = assigned_resources[seg.resource_type]
                             resource = next(r for r in self.resources[seg.resource_type] 
@@ -135,8 +233,10 @@ class MultiResourceScheduler:
                             seg_duration = seg.get_duration(resource.bandwidth)
                             seg_end = seg_start + seg_duration
                             
-                            # Update resource availability
-                            self.resource_queues[resource_id].available_time = seg_end
+                            # Update resource availability (but don't override binding for DSP_Runtime)
+                            if task.runtime_type == RuntimeType.ACPU_RUNTIME:
+                                self.resource_queues[resource_id].available_time = seg_end
+                            
                             actual_end = max(actual_end, seg_end)
                         
                         # Create schedule info
@@ -145,7 +245,8 @@ class MultiResourceScheduler:
                             start_time=actual_start,
                             end_time=actual_end,
                             assigned_resources=assigned_resources,
-                            actual_latency=actual_end - current_time
+                            actual_latency=actual_end - current_time,
+                            runtime_type=task.runtime_type
                         )
                         
                         task.schedule_info = schedule_info
@@ -159,10 +260,12 @@ class MultiResourceScheduler:
                 # Find next event time
                 next_time = current_time + 1.0
                 
-                # Check when resources become available
+                # Check when resources become available or bindings expire
                 for queue in self.resource_queues.values():
                     if queue.available_time > current_time:
                         next_time = min(next_time, queue.available_time)
+                    if queue.bound_until > current_time:
+                        next_time = min(next_time, queue.bound_until)
                 
                 # Check when tasks can be scheduled again
                 for task in self.tasks.values():
@@ -194,22 +297,29 @@ class MultiResourceScheduler:
         return utilization
     
     def print_schedule_summary(self):
-        """Print scheduling summary"""
+        """Print scheduling summary with runtime information"""
         print("=== Scheduling Summary ===")
         print(f"NPU Resources: {len(self.resources[ResourceType.NPU])}")
         print(f"DSP Resources: {len(self.resources[ResourceType.DSP])}")
         print(f"Total Tasks: {len(self.tasks)}")
         print(f"Total Scheduled Events: {len(self.schedule_history)}")
         
-        # Count by priority
+        # Count by priority and runtime type
         priority_counts = defaultdict(int)
+        runtime_counts = defaultdict(int)
         for task in self.tasks.values():
             priority_counts[task.priority.name] += 1
+            runtime_counts[task.runtime_type.value] += 1
         
         print("\nTasks by Priority:")
         for priority in TaskPriority:
             count = priority_counts[priority.name]
             print(f"  {priority.name}: {count} tasks")
+        
+        print("\nTasks by Runtime Type:")
+        for runtime_type in RuntimeType:
+            count = runtime_counts[runtime_type.value]
+            print(f"  {runtime_type.value}: {count} tasks")
         
         # Count task scheduling
         task_schedule_count = defaultdict(int)
@@ -230,7 +340,7 @@ class MultiResourceScheduler:
                     avg_latency = sum(task_latencies[task.task_id]) / len(task_latencies[task.task_id]) if task_latencies[task.task_id] else 0
                     achieved_fps = count / (self.schedule_history[-1].end_time / 1000) if self.schedule_history else 0
                     
-                    print(f"    {task.task_id} ({task.name}):")
+                    print(f"    {task.task_id} ({task.name}) [{task.runtime_type.value}]:")
                     print(f"      Scheduled Count: {count}")
                     print(f"      Average Latency: {avg_latency:.1f}ms (Required: {task.latency_requirement}ms)")
                     print(f"      Achieved FPS: {achieved_fps:.1f} (Required: {task.fps_requirement})")
@@ -242,3 +352,15 @@ class MultiResourceScheduler:
             print("\nResource Utilization:")
             for resource_id, util in utilization.items():
                 print(f"  {resource_id}: {util:.1f}%")
+        
+        # Resource binding statistics
+        binding_count = defaultdict(int)
+        for schedule in self.schedule_history:
+            if schedule.runtime_type == RuntimeType.DSP_RUNTIME:
+                binding_count[schedule.task_id] += 1
+        
+        if binding_count:
+            print("\nDSP_Runtime Binding Statistics:")
+            for task_id, count in binding_count.items():
+                task = self.tasks[task_id]
+                print(f"  {task_id} ({task.name}): {count} bound executions")

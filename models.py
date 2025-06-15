@@ -1,6 +1,6 @@
-from typing import Dict, Optional
+from typing import Dict, Optional, Set
 from dataclasses import dataclass
-from enums import ResourceType
+from enums import ResourceType, RuntimeType
 
 @dataclass
 class ResourceSegment:
@@ -34,3 +34,12 @@ class TaskScheduleInfo:
     end_time: float
     assigned_resources: Dict[ResourceType, str]  # {resource type: assigned resource ID}
     actual_latency: float  # Actual latency from scheduling to completion
+    runtime_type: RuntimeType  # Runtime configuration used
+
+@dataclass
+class ResourceBinding:
+    """Resource binding information for DSP_Runtime tasks"""
+    task_id: str
+    bound_resources: Set[str]  # Set of resource IDs that are bound together
+    binding_start: float
+    binding_end: float
