@@ -1,18 +1,23 @@
+#!/usr/bin/env python3
+"""
+Enhanced neural network task class with custom segmentation as default
+"""
+
 from typing import List, Dict, Set, Optional, Tuple
 from enums import ResourceType, TaskPriority, RuntimeType, SegmentationStrategy
 from models import ResourceSegment, TaskScheduleInfo, SubSegment, SegmentationDecision
 
 class NNTask:
-    """Enhanced neural network task class with network segmentation support"""
+    """Enhanced neural network task class with custom segmentation as default"""
     
     def __init__(self, task_id: str, name: str = "", priority: TaskPriority = TaskPriority.NORMAL, 
                  runtime_type: RuntimeType = RuntimeType.ACPU_RUNTIME,
-                 segmentation_strategy: SegmentationStrategy = SegmentationStrategy.ADAPTIVE_SEGMENTATION):
+                 segmentation_strategy: SegmentationStrategy = SegmentationStrategy.CUSTOM_SEGMENTATION):
         self.task_id = task_id
         self.name = name or f"Task_{task_id}"
-        self.priority = priority  # Task priority level
-        self.runtime_type = runtime_type  # Runtime configuration
-        self.segmentation_strategy = segmentation_strategy  # How to handle network cutting
+        self.priority = priority
+        self.runtime_type = runtime_type
+        self.segmentation_strategy = segmentation_strategy
         
         self.segments: List[ResourceSegment] = []
         self.dependencies: Set[str] = set()
@@ -22,12 +27,174 @@ class NNTask:
         # Scheduling related info
         self.schedule_info: Optional[TaskScheduleInfo] = None
         self.last_execution_time: float = -float('inf')
-        self.ready_time: float = 0  # Time when task becomes ready (dependencies satisfied)
+        self.ready_time: float = 0
         
         # Network segmentation related
         self.segmentation_decisions: List[SegmentationDecision] = []
-        self.current_segmentation: Dict[str, List[str]] = {}  # {segment_id: [enabled_cut_ids]}
+        self.current_segmentation: Dict[str, List[str]] = {}
         self.total_segmentation_overhead: float = 0.0
+        
+        # Preset cut points for CUSTOM_SEGMENTATION
+        self.preset_cut_configurations: Dict[str, List[List[str]]] = {}
+        self.selected_cut_config_index: Dict[str, int] = {}
+    
+    def set_preset_cut_configurations(self, segment_id: str, configurations: List[List[str]]):
+        """Set preset cut point configurations for a segment
+        Args:
+            segment_id: ID of the segment
+            configurations: List of cut point configurations, each is a list of cut point IDs
+        Example:
+            task.set_preset_cut_configurations("npu_seg", [
+                [],                    # Config 0: No cuts
+                ["op1"],              # Config 1: Cut at op1 only
+                ["op1", "op10"],      # Config 2: Cut at op1 and op10
+                ["op1", "op10", "op23"]  # Config 3: Cut at all points
+            ])
+        """
+        self.preset_cut_configurations[segment_id] = configurations
+        # Default to no cuts (config 0)
+        self.selected_cut_config_index[segment_id] = 0
+    
+    def select_cut_configuration(self, segment_id: str, config_index: int):
+        """Select a specific cut configuration for a segment
+        Args:
+            segment_id: ID of the segment
+            config_index: Index of the configuration to use
+        """
+        if segment_id in self.preset_cut_configurations:
+            max_index = len(self.preset_cut_configurations[segment_id]) - 1
+            if 0 <= config_index <= max_index:
+                self.selected_cut_config_index[segment_id] = config_index
+                # Update current segmentation
+                self.current_segmentation[segment_id] = self.preset_cut_configurations[segment_id][config_index]
+            else:
+                raise ValueError(f"Config index {config_index} out of range [0, {max_index}]")
+        else:
+            raise ValueError(f"No preset configurations for segment {segment_id}")
+    
+    def get_optimal_segmentation(self, available_resources: Dict[ResourceType, List[float]], 
+                               current_time: float = 0.0) -> Dict[str, List[str]]:
+        """Determine optimal segmentation based on strategy and task properties"""
+        if self.segmentation_strategy == SegmentationStrategy.NO_SEGMENTATION:
+            return {seg.segment_id: [] for seg in self.segments}
+        
+        elif self.segmentation_strategy == SegmentationStrategy.FORCED_SEGMENTATION:
+            return {seg.segment_id: seg.get_available_cuts() for seg in self.segments}
+        
+        elif self.segmentation_strategy == SegmentationStrategy.CUSTOM_SEGMENTATION:
+            # Use preset configurations based on selected index
+            result = {}
+            for segment in self.segments:
+                if segment.segment_id in self.preset_cut_configurations:
+                    config_idx = self.selected_cut_config_index.get(segment.segment_id, 0)
+                    result[segment.segment_id] = self.preset_cut_configurations[segment.segment_id][config_idx]
+                else:
+                    # If no preset config, use current segmentation or empty
+                    result[segment.segment_id] = self.current_segmentation.get(segment.segment_id, [])
+            return result
+        
+        else:  # ADAPTIVE_SEGMENTATION
+            # Modified adaptive logic to consider priority and runtime_type more heavily
+            return self._calculate_priority_aware_segmentation(available_resources, current_time)
+    
+    def _calculate_priority_aware_segmentation(self, available_resources: Dict[ResourceType, List[float]], 
+                                              current_time: float) -> Dict[str, List[str]]:
+        """Calculate segmentation with strong consideration for priority and runtime_type"""
+        decisions = {}
+        
+        for segment in self.segments:
+            segment_decisions = []
+            available_cuts = segment.get_available_cuts()
+            
+            if not available_cuts:
+                decisions[segment.segment_id] = []
+                continue
+            
+            # Get available bandwidths for this resource type
+            available_bw = available_resources.get(segment.resource_type, [])
+            if not available_bw:
+                decisions[segment.segment_id] = []
+                continue
+            
+            # Priority-based cut selection
+            max_cuts = len(available_cuts)
+            
+            # Determine number of cuts based on priority and runtime type
+            if self.priority == TaskPriority.CRITICAL:
+                # Critical tasks: aggressive segmentation for low latency
+                if self.runtime_type == RuntimeType.DSP_RUNTIME:
+                    # DSP_Runtime critical tasks need careful segmentation due to binding
+                    num_cuts = min(2, max_cuts)  # Limited cuts to reduce binding complexity
+                else:
+                    # ACPU_Runtime critical tasks can use more cuts
+                    num_cuts = min(max_cuts, 3)  # Up to 3 cuts for parallelism
+            
+            elif self.priority == TaskPriority.HIGH:
+                # High priority: moderate segmentation
+                if self.runtime_type == RuntimeType.DSP_RUNTIME:
+                    num_cuts = min(1, max_cuts)  # Single cut for DSP_Runtime
+                else:
+                    num_cuts = min(2, max_cuts)  # Up to 2 cuts for ACPU_Runtime
+            
+            elif self.priority == TaskPriority.NORMAL:
+                # Normal priority: conservative segmentation
+                if len(available_bw) > 2:  # Only segment if multiple resources available
+                    num_cuts = min(1, max_cuts)
+                else:
+                    num_cuts = 0
+            
+            else:  # LOW priority
+                # Low priority: minimal segmentation
+                num_cuts = 0 if self.runtime_type == RuntimeType.DSP_RUNTIME else min(1, max_cuts)
+            
+            # Consider overhead limits
+            max_acceptable_overhead = self.latency_requirement * 0.15  # 15% of latency requirement
+            
+            # Select cuts that don't exceed overhead threshold
+            selected_cuts = []
+            total_overhead = 0.0
+            
+            for i, cut_point in enumerate(segment.cut_points):
+                if len(selected_cuts) >= num_cuts:
+                    break
+                if total_overhead + cut_point.overhead_ms <= max_acceptable_overhead:
+                    selected_cuts.append(cut_point.op_id)
+                    total_overhead += cut_point.overhead_ms
+            
+            decisions[segment.segment_id] = selected_cuts
+        
+        return decisions
+    
+    def get_priority_score(self) -> float:
+        """Get numerical priority score for scheduling decisions"""
+        # Lower value = higher priority
+        base_score = self.priority.value
+        
+        # Adjust score based on runtime type
+        if self.runtime_type == RuntimeType.DSP_RUNTIME:
+            # DSP_Runtime tasks get slight priority boost due to resource binding needs
+            base_score -= 0.5
+        
+        return max(0, base_score)
+    
+    def get_segmentation_complexity(self) -> float:
+        """Calculate segmentation complexity score"""
+        if not self.is_segmented:
+            return 0.0
+        
+        complexity = 0.0
+        for segment in self.segments:
+            if segment.is_segmented:
+                # More sub-segments = higher complexity
+                complexity += len(segment.sub_segments) * 0.5
+                # Add overhead penalty
+                complexity += segment.segmentation_overhead * 0.1
+        
+        # Runtime type affects complexity
+        if self.runtime_type == RuntimeType.DSP_RUNTIME:
+            complexity *= 1.5  # DSP_Runtime binding adds complexity
+        
+        return complexity
     
     def set_npu_only(self, duration_table: Dict[float, float], segment_id: str = "npu_seg"):
         """Set as NPU-only task with optional cutting support"""
@@ -44,11 +211,7 @@ class NNTask:
             self.segments.append(segment)
     
     def add_cut_points_to_segment(self, segment_id: str, cut_points: List[Tuple[str, float, float]]):
-        """Add cut points to a specific segment
-        Args:
-            segment_id: ID of the segment to add cuts to
-            cut_points: List of (op_id, position, overhead_ms) tuples
-        """
+        """Add cut points to a specific segment"""
         segment = self.get_segment_by_id(segment_id)
         if segment:
             for op_id, position, overhead_ms in cut_points:
@@ -68,12 +231,7 @@ class NNTask:
         return available_cuts
     
     def apply_segmentation_decision(self, decisions: Dict[str, List[str]]) -> float:
-        """Apply segmentation decisions and return total overhead
-        Args:
-            decisions: {segment_id: [enabled_cut_ids]}
-        Returns:
-            Total segmentation overhead in ms
-        """
+        """Apply segmentation decisions and return total overhead"""
         total_overhead = 0.0
         self.current_segmentation = decisions.copy()
         
@@ -84,73 +242,6 @@ class NNTask:
         
         self.total_segmentation_overhead = total_overhead
         return total_overhead
-    
-    def get_optimal_segmentation(self, available_resources: Dict[ResourceType, List[float]], 
-                               current_time: float = 0.0) -> Dict[str, List[str]]:
-        """Determine optimal segmentation based on available resources and strategy"""
-        if self.segmentation_strategy == SegmentationStrategy.NO_SEGMENTATION:
-            return {seg.segment_id: [] for seg in self.segments}
-        
-        elif self.segmentation_strategy == SegmentationStrategy.FORCED_SEGMENTATION:
-            return {seg.segment_id: seg.get_available_cuts() for seg in self.segments}
-        
-        elif self.segmentation_strategy == SegmentationStrategy.ADAPTIVE_SEGMENTATION:
-            return self._calculate_adaptive_segmentation(available_resources, current_time)
-        
-        else:  # CUSTOM_SEGMENTATION or others
-            return self.current_segmentation
-    
-    def _calculate_adaptive_segmentation(self, available_resources: Dict[ResourceType, List[float]], 
-                                       current_time: float) -> Dict[str, List[str]]:
-        """Calculate adaptive segmentation based on resource availability and task requirements"""
-        decisions = {}
-        
-        for segment in self.segments:
-            segment_decisions = []
-            available_cuts = segment.get_available_cuts()
-            
-            if not available_cuts:
-                decisions[segment.segment_id] = []
-                continue
-            
-            # Get available bandwidths for this resource type
-            available_bw = available_resources.get(segment.resource_type, [])
-            if not available_bw:
-                decisions[segment.segment_id] = []
-                continue
-            
-            # Calculate benefit of segmentation
-            base_duration = segment.get_duration(max(available_bw))
-            
-            # Simple heuristic: use cuts if they can potentially improve parallelism
-            # and the overhead is acceptable relative to task latency requirement
-            max_acceptable_overhead = self.latency_requirement * 0.1  # 10% of latency requirement
-            
-            # Calculate potential cuts that don't exceed overhead threshold
-            potential_cuts = []
-            total_overhead = 0.0
-            
-            for cut_point in segment.cut_points:
-                if total_overhead + cut_point.overhead_ms <= max_acceptable_overhead:
-                    potential_cuts.append(cut_point.op_id)
-                    total_overhead += cut_point.overhead_ms
-                else:
-                    break  # Stop adding cuts if overhead becomes too high
-            
-            # Additional heuristic: prefer cutting for high-priority tasks in resource-constrained scenarios
-            if self.priority.value <= 1:  # CRITICAL or HIGH priority
-                # More aggressive cutting for high-priority tasks
-                segment_decisions = potential_cuts
-            elif len(available_bw) > 1:
-                # Only cut if multiple bandwidths available (can benefit from parallelism)
-                segment_decisions = potential_cuts[:len(potential_cuts)//2]  # Use half of potential cuts
-            else:
-                # Conservative cutting for low priority or limited resources
-                segment_decisions = potential_cuts[:1] if potential_cuts else []
-            
-            decisions[segment.segment_id] = segment_decisions
-        
-        return decisions
     
     def get_total_duration_with_segmentation(self, resource_bw_map: Dict[ResourceType, float], 
                                            segmentation_decisions: Optional[Dict[str, List[str]]] = None) -> float:
