@@ -1,0 +1,962 @@
+{
+  "traceEvents": [
+    {
+      "name": "process_name",
+      "ph": "M",
+      "pid": 1,
+      "args": {
+        "name": "NPU"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "name": "NPU_0"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "name": "NPU_1"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 1,
+      "tid": 3,
+      "args": {
+        "name": "NPU_2"
+      }
+    },
+    {
+      "name": "process_name",
+      "ph": "M",
+      "pid": 2,
+      "args": {
+        "name": "DSP"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "name": "DSP_0"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 2,
+      "tid": 2,
+      "args": {
+        "name": "DSP_1"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 0,
+      "dur": 8000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SafetyMonitor",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 0,
+      "dur": 8000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "ObstacleDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 8000,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "ObstacleDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T3",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 0,
+      "dur": 12000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "LaneDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 0,
+      "dur": 10000,
+      "pid": 2,
+      "tid": 2,
+      "args": {
+        "task": "TrafficSignRecog",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 10000,
+      "dur": 12000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "TrafficSignRecog",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 22000,
+      "dur": 5000,
+      "pid": 2,
+      "tid": 2,
+      "args": {
+        "task": "TrafficSignRecog",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T5",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 0,
+      "dur": 20000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "PedestrianTracking",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T6",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 0,
+      "dur": 50000,
+      "pid": 1,
+      "tid": 3,
+      "args": {
+        "task": "SceneUnderstanding",
+        "priority": "LOW"
+      }
+    },
+    {
+      "name": "T8",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 12000,
+      "dur": 14000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "Task_8",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T9",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 20000,
+      "dur": 24000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "Task_9",
+        "priority": "LOW"
+      }
+    },
+    {
+      "name": "T10",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 20000,
+      "dur": 25000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "Task_10",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T7",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 26000,
+      "dur": 15000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "MapUpdate",
+        "priority": "LOW"
+      }
+    },
+    {
+      "name": "T7",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 41000,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "MapUpdate",
+        "priority": "LOW"
+      }
+    },
+    {
+      "name": "T11",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 26000,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "Task_11",
+        "priority": "LOW"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 41000,
+      "dur": 8000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SafetyMonitor",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 50000,
+      "dur": 8000,
+      "pid": 2,
+      "tid": 2,
+      "args": {
+        "task": "ObstacleDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 58000,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "ObstacleDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T3",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 66666,
+      "dur": 12000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "LaneDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 74333,
+      "dur": 12000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "SafetyMonitor",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 100000,
+      "dur": 8000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "ObstacleDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 108000,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "ObstacleDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 100000,
+      "dur": 10000,
+      "pid": 2,
+      "tid": 2,
+      "args": {
+        "task": "TrafficSignRecog",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 110000,
+      "dur": 12000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "TrafficSignRecog",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 122000,
+      "dur": 5000,
+      "pid": 2,
+      "tid": 2,
+      "args": {
+        "task": "TrafficSignRecog",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T5",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 100000,
+      "dur": 12000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "PedestrianTracking",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 107666,
+      "dur": 12000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "SafetyMonitor",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T3",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 133333,
+      "dur": 12000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "LaneDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T8",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 137000,
+      "dur": 23000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "Task_8",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 141000,
+      "dur": 20000,
+      "pid": 1,
+      "tid": 3,
+      "args": {
+        "task": "SafetyMonitor",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T9",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 145000,
+      "dur": 38000,
+      "pid": 1,
+      "tid": 3,
+      "args": {
+        "task": "Task_9",
+        "priority": "LOW"
+      }
+    },
+    {
+      "name": "T10",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 145000,
+      "dur": 40000,
+      "pid": 1,
+      "tid": 3,
+      "args": {
+        "task": "Task_10",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 150000,
+      "dur": 8000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "ObstacleDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 158000,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "ObstacleDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T11",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 151000,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "Task_11",
+        "priority": "LOW"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 174333,
+      "dur": 8000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SafetyMonitor",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 200000,
+      "dur": 8000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "ObstacleDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 208000,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "ObstacleDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T3",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 200000,
+      "dur": 12000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "LaneDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 200000,
+      "dur": 10000,
+      "pid": 2,
+      "tid": 2,
+      "args": {
+        "task": "TrafficSignRecog",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 210000,
+      "dur": 12000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "TrafficSignRecog",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 222000,
+      "dur": 5000,
+      "pid": 2,
+      "tid": 2,
+      "args": {
+        "task": "TrafficSignRecog",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T5",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 200000,
+      "dur": 20000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "PedestrianTracking",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T6",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 200000,
+      "dur": 50000,
+      "pid": 1,
+      "tid": 3,
+      "args": {
+        "task": "SceneUnderstanding",
+        "priority": "LOW"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 212000,
+      "dur": 8000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SafetyMonitor",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 245333,
+      "dur": 8000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SafetyMonitor",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 250000,
+      "dur": 8000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "ObstacleDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 258000,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "ObstacleDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T8",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 262000,
+      "dur": 14000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "Task_8",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T3",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 266666,
+      "dur": 18000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "LaneDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T9",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 270000,
+      "dur": 38000,
+      "pid": 1,
+      "tid": 3,
+      "args": {
+        "task": "Task_9",
+        "priority": "LOW"
+      }
+    },
+    {
+      "name": "T10",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 270000,
+      "dur": 40000,
+      "pid": 1,
+      "tid": 3,
+      "args": {
+        "task": "Task_10",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T11",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 276000,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "Task_11",
+        "priority": "LOW"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 284666,
+      "dur": 12000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "SafetyMonitor",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 300000,
+      "dur": 8000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "ObstacleDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 308000,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "ObstacleDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 300000,
+      "dur": 10000,
+      "pid": 2,
+      "tid": 2,
+      "args": {
+        "task": "TrafficSignRecog",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 310000,
+      "dur": 12000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "TrafficSignRecog",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 322000,
+      "dur": 5000,
+      "pid": 2,
+      "tid": 2,
+      "args": {
+        "task": "TrafficSignRecog",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T5",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 300000,
+      "dur": 12000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "PedestrianTracking",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 318000,
+      "dur": 8000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SafetyMonitor",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T3",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 333333,
+      "dur": 12000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "LaneDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 350000,
+      "dur": 8000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "ObstacleDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 358000,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "ObstacleDetection",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 351333,
+      "dur": 8000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SafetyMonitor",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 384666,
+      "dur": 8000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SafetyMonitor",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T8",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 387000,
+      "dur": 14000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "Task_8",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T9",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 395000,
+      "dur": 24000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "Task_9",
+        "priority": "LOW"
+      }
+    },
+    {
+      "name": "T10",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 395000,
+      "dur": 25000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "Task_10",
+        "priority": "NORMAL"
+      }
+    }
+  ]
+}
