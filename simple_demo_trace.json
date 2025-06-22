@@ -1,0 +1,229 @@
+{
+  "traceEvents": [
+    {
+      "name": "process_name",
+      "ph": "M",
+      "pid": 1,
+      "args": {
+        "name": "NPU"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "name": "NPU_0"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "name": "NPU_1"
+      }
+    },
+    {
+      "name": "process_name",
+      "ph": "M",
+      "pid": 2,
+      "args": {
+        "name": "DSP"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "name": "DSP_0"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 0,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "CriticalTask",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 0,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "HighPriorityTask",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 10000,
+      "dur": 5000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "MixedTask",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 15000,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "MixedTask",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 33333,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "CriticalTask",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 50000,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "HighPriorityTask",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 66666,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "CriticalTask",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 100000,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "CriticalTask",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 100000,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "HighPriorityTask",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 110000,
+      "dur": 5000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "MixedTask",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 115000,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "MixedTask",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 133333,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "CriticalTask",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 150000,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "HighPriorityTask",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 166666,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "CriticalTask",
+        "priority": "CRITICAL"
+      }
+    }
+  ]
+}
