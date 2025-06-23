@@ -7,6 +7,7 @@ from typing import Dict, List, Optional, Tuple
 from collections import defaultdict
 from enums import ResourceType, TaskPriority, RuntimeType
 from models import TaskScheduleInfo, ResourceBinding, SubSegment
+from scheduler_segmentation_fix_v2 import create_sub_segment_schedule
 
 # Timing precision buffer to avoid floating-point conflicts
 TIMING_BUFFER = 0.01  # 0.01ms buffer between segments
