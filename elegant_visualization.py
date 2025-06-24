@@ -22,22 +22,36 @@ class ElegantSchedulerVisualizer:
     def __init__(self, scheduler: MultiResourceScheduler):
         self.scheduler = scheduler
         
-        # Cool, professional color palette
+        # Dragon4 priority color palette (红、橙、绿、蓝)
         self.priority_colors = {
-            TaskPriority.CRITICAL: '#7C2D12',    # Dark rust
-            TaskPriority.HIGH: '#1E3A8A',        # Navy blue
-            TaskPriority.NORMAL: '#065F46',      # Dark teal
-            TaskPriority.LOW: '#312E81'          # Indigo
+            TaskPriority.CRITICAL: '#DC2626',    # 红色 - CRITICAL
+            TaskPriority.HIGH: '#EA580C',        # 橙色 - HIGH  
+            TaskPriority.NORMAL: '#16A34A',      # 绿色 - NORMAL
+            TaskPriority.LOW: '#2563EB'          # 蓝色 - LOW
         }
         
-        # Alternative palette (more vibrant but still cool)
+        # Dragon4 alternative palette (更鲜艳的红、橙、绿、蓝)
         self.alt_priority_colors = {
-            TaskPriority.CRITICAL: '#B91C1C',    # Crimson
-            TaskPriority.HIGH: '#1E40AF',        # Royal blue
-            TaskPriority.NORMAL: '#047857',      # Emerald
-            TaskPriority.LOW: '#4C1D95'          # Purple
+            TaskPriority.CRITICAL: '#EF4444',    # 鲜红色 - CRITICAL
+            TaskPriority.HIGH: '#F97316',        # 鲜橙色 - HIGH
+            TaskPriority.NORMAL: '#22C55E',      # 鲜绿色 - NORMAL
+            TaskPriority.LOW: '#3B82F6'          # 鲜蓝色 - LOW
         }
     
+    def _get_dragon4_task_name(self, task, segment_index=None, total_segments=None):
+            """获取Dragon4格式的任务名称"""
+            # 基础名称
+            base_name = task.task_id
+            
+            # DSP Runtime前缀
+            if hasattr(task, 'runtime_type') and task.runtime_type.name == 'DSP_RUNTIME':
+                base_name = f"X: {base_name}"
+            
+            # 分段后缀
+            if segment_index is not None and total_segments is not None and total_segments > 1:
+                base_name = f"{base_name}_{segment_index + 1}"
+            
+            return base_name
     def plot_elegant_gantt(self, 
                           time_window: float = None, 
                           bar_height: float = 0.35,  # Thinner bars
@@ -198,7 +212,7 @@ class ElegantSchedulerVisualizer:
                     
                     # Minimal label - only show on first segment
                     if i == 0 and duration > 20:
-                        label = f"{task.task_id}"
+                        label = self._get_dragon4_task_name(task)
                         ax.text(start_time + 3, y_pos, label,
                                ha='left', va='center', fontsize=8,
                                color='white', fontweight='500')
@@ -235,7 +249,7 @@ class ElegantSchedulerVisualizer:
                         
                         # Minimal label
                         if duration > 20:
-                            label = f"{task.task_id}"
+                            label = self._get_dragon4_task_name(task)
                             ax.text(start_time + 3, y_pos, label,
                                    ha='left', va='center', fontsize=8,
                                    color='white', fontweight='500')
@@ -373,7 +387,7 @@ class ElegantSchedulerVisualizer:
                                     pid, tid = resource_mapping[resource_id]
                                     
                                     event = {
-                                        "name": f"{task.task_id}-{i+1}",
+                                        "name": self._get_dragon4_task_name(task, i, len(schedule.sub_segment_schedule)),
                                         "cat": task.priority.name,
                                         "ph": "X",
                                         "ts": int(start_time * 1000),  # 转换为微秒
@@ -390,12 +404,12 @@ class ElegantSchedulerVisualizer:
                                         }
                                     }
                                     
-                                    # 添加颜色
+                                    # Dragon4 Chrome Tracing颜色映射
                                     color_map = {
-                                        TaskPriority.CRITICAL: "thread_state_runnable",
-                                        TaskPriority.HIGH: "rail_animation", 
-                                        TaskPriority.NORMAL: "generic_work",
-                                        TaskPriority.LOW: "good"
+                                        TaskPriority.CRITICAL: "terrible",           # 红色
+                                        TaskPriority.HIGH: "bad",                    # 橙色
+                                        TaskPriority.NORMAL: "good",                 # 绿色  
+                                        TaskPriority.LOW: "thread_state_runnable"    # 蓝色
                                     }
                                     event["cname"] = color_map.get(task.priority, "generic_work")
                                     
@@ -414,7 +428,7 @@ class ElegantSchedulerVisualizer:
                                 pid, tid = resource_mapping[resource_id]
                                 
                                 events.append({
-                                    "name": task.task_id,
+                                    "name": self._get_dragon4_task_name(task),
                                     "cat": task.priority.name,
                                     "ph": "X",
                                     "ts": int(start * 1000),

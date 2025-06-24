@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-使用完整资源修复的Dragon4测试
-应用已验证成功的complete_resource_fix
+简化版Dragon4测试 - 直接使用修复后的elegant_visualization
+避免依赖额外的配置模块
 """
 
 import sys
@@ -177,7 +177,118 @@ def create_fallback_workload():
     return tasks
 
 
-def run_test_with_complete_fix(system, tasks, test_name="Complete Fix Test"):
+def generate_simple_visualization(scheduler, test_name="Dragon4"):
+    """生成简化的可视化，直接使用修复后的elegant_visualization"""
+    
+    print(f"\n🎨 生成可视化 (使用修复后的颜色方案)...")
+    
+    try:
+        from elegant_visualization import ElegantSchedulerVisualizer
+        
+        # 创建可视化器（已经包含Dragon4颜色修复）
+        visualizer = ElegantSchedulerVisualizer(scheduler)
+        
+        # 生成甘特图
+        print("  📊 创建Dragon4甘特图...")
+        visualizer.plot_elegant_gantt(
+            bar_height=0.35,
+            spacing=0.8,
+            use_alt_colors=False  # 使用修复后的主颜色方案
+        )
+        
+        # 导出Chrome Tracing格式
+        trace_filename = f"{test_name.lower().replace(' ', '_')}_trace.json"
+        print(f"  🔄 导出Chrome Tracing -> {trace_filename}")
+        visualizer.export_chrome_tracing(trace_filename)
+        
+        print(f"\n✅ 可视化生成完成!")
+        print(f"   📊 甘特图: Dragon4颜色方案 (🔴红 🟠橙 🟢绿 🔵蓝)")
+        print(f"   🔄 Chrome Tracing: {trace_filename}")
+        print(f"   💡 打开 chrome://tracing 加载 {trace_filename}")
+        
+        return True
+        
+    except ImportError as e:
+        print(f"❌ elegant_visualization 模块不可用: {e}")
+        print("   请确保 elegant_visualization.py 文件存在")
+        print("   并已运行颜色修复: python elegant_visualization_dragon4_fix.py")
+        return False
+    except Exception as e:
+        print(f"❌ 可视化生成失败: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+
+def print_task_analysis_with_colors(scheduler, results):
+    """打印任务分析，手动显示颜色信息"""
+    
+    print(f"\n📋 Dragon4任务分析:")
+    print("=" * 70)
+    
+    # Dragon4颜色方案
+    priority_colors = {
+        TaskPriority.CRITICAL: "🔴 红色",
+        TaskPriority.HIGH: "🟠 橙色", 
+        TaskPriority.NORMAL: "🟢 绿色",
+        TaskPriority.LOW: "🔵 蓝色"
+    }
+    
+    # 按任务分组分析
+    task_analysis = defaultdict(list)
+    for result in results:
+        task_analysis[result.task_id].append(result)
+    
+    print("任务概览 (在可视化中的显示方式):")
+    print(f"{'显示名称':<15} {'类型':<12} {'优先级':<10} {'颜色':<10} {'执行次数':<8} {'总时长'}")
+    print("-" * 75)
+    
+    for task_id in sorted(task_analysis.keys()):
+        if task_id in scheduler.tasks:
+            task = scheduler.tasks[task_id]
+            executions = task_analysis[task_id]
+            
+            # 确定显示名称
+            if task.runtime_type == RuntimeType.DSP_RUNTIME:
+                task_display = f"X: {task_id}"  # DSP Runtime任务前加 "X: "
+                task_type = "DSP Runtime"
+            else:
+                task_display = task_id  # ACPU Runtime任务不加标识
+                task_type = "ACPU Runtime"
+            
+            # 获取优先级颜色
+            color_info = priority_colors.get(task.priority, "⚪ 默认")
+            
+            # 计算总执行时间
+            total_duration = sum(r.end_time - r.start_time for r in executions)
+            
+            print(f"{task_display:<15} {task_type:<12} {task.priority.name:<10} {color_info:<10} {len(executions):<8} {total_duration:.1f}ms")
+    
+    print(f"\n🎨 Dragon4可视化图例:")
+    print("  - 甘特图颜色: 🔴红色(CRITICAL) → 🟠橙色(HIGH) → 🟢绿色(NORMAL) → 🔵蓝色(LOW)")
+    print("  - DSP Runtime任务: 显示为 'X: TaskID' (前缀 'X: ')")
+    print("  - ACPU Runtime任务: 显示为 'TaskID' (无前缀)")
+    
+    # 执行时间统计
+    print(f"\n⏱️  执行时间统计:")
+    for task_id in sorted(task_analysis.keys()):
+        if task_id in scheduler.tasks:
+            task = scheduler.tasks[task_id]
+            executions = task_analysis[task_id]
+            
+            if executions:
+                execution_times = [r.start_time for r in executions]
+                intervals = [execution_times[i+1] - execution_times[i] 
+                           for i in range(len(execution_times)-1)]
+                
+                avg_interval = sum(intervals) / len(intervals) if intervals else 0
+                expected_interval = 1000.0 / task.fps_requirement if task.fps_requirement > 0 else 0
+                
+                display_name = f"X: {task_id}" if task.runtime_type == RuntimeType.DSP_RUNTIME else task_id
+                print(f"  {display_name}: 平均间隔 {avg_interval:.1f}ms (期望 {expected_interval:.1f}ms)")
+
+
+def run_test_with_complete_fix(system, tasks, test_name="Dragon4测试"):
     """使用完整修复运行测试"""
     
     print(f"\n{'='*60}")
@@ -193,7 +304,9 @@ def run_test_with_complete_fix(system, tasks, test_name="Complete Fix Test"):
     
     print(f"添加了 {len(tasks)} 个任务:")
     for task in tasks:
-        print(f"  + {task.task_id}: {task.priority.name} 优先级, {task.fps_requirement} FPS")
+        runtime_label = "DSP Runtime" if task.runtime_type == RuntimeType.DSP_RUNTIME else "ACPU Runtime"
+        display_name = f"X: {task.task_id}" if task.runtime_type == RuntimeType.DSP_RUNTIME else task.task_id
+        print(f"  + {display_name}: {task.priority.name} 优先级, {task.fps_requirement} FPS ({runtime_label})")
     
     # 执行调度
     time_window = 500.0
@@ -319,10 +432,13 @@ def print_resource_timeline(scheduler, results):
     by_resource = defaultdict(list)
     for result in results:
         for res_type, res_id in result.assigned_resources.items():
+            task = scheduler.tasks[result.task_id]
+            display_name = f"X: {task.task_id}" if task.runtime_type == RuntimeType.DSP_RUNTIME else task.task_id
+            
             by_resource[res_id].append({
                 'start': result.start_time,
                 'end': result.end_time,
-                'task': result.task_id
+                'task': display_name
             })
     
     for res_id in sorted(by_resource.keys()):
@@ -340,7 +456,7 @@ def main():
     """主测试函数"""
     
     print("=" * 80)
-    print("Dragon4 系统测试 - 使用验证成功的完整资源修复")
+    print("Dragon4 系统基础调度测试 - 简化版 (Dragon4颜色方案)")
     print("=" * 80)
     
     # 1. 创建应用完整修复的Dragon4系统
@@ -352,10 +468,18 @@ def main():
     print(f"\n使用 {'完整' if HAS_DRAGON4_SYSTEM else '备用'} Dragon4系统")
     print(f"使用 {'完整' if HAS_DRAGON4_WORKLOAD else '备用'} 工作负载")
     
-    # 3. 运行测试
-    results, metrics = run_test_with_complete_fix(system, tasks, "Dragon4 Complete Fix Test")
+    # 3. 运行基础调度测试
+    results, metrics = run_test_with_complete_fix(system, tasks, "Dragon4基础调度测试")
     
-    # 4. 最终验证
+    # 4. 详细任务分析
+    if results:
+        print_task_analysis_with_colors(system.scheduler, results)
+    
+    # 5. 生成可视化
+    if results:
+        visualization_success = generate_simple_visualization(system.scheduler, "Dragon4_基础调度")
+    
+    # 6. 最终验证和总结
     print(f"\n{'='*60}")
     print("最终验证结果")
     print(f"{'='*60}")
@@ -363,18 +487,31 @@ def main():
     if results:
         is_valid = validate_fixed_schedule(system.scheduler)
         if is_valid:
-            print("🎉 成功! Dragon4系统资源冲突已完全解决")
+            print("🎉 成功! Dragon4系统基础调度测试完成")
             print("✅ 零资源冲突")
-            print("✅ 优先级调度正确")
+            print("✅ 优先级调度正确")  
             print("✅ 任务性能满足需求")
+            if 'visualization_success' in locals() and visualization_success:
+                print("✅ Dragon4可视化生成成功")
+            
+            print(f"\n📊 性能摘要:")
+            print(f"  - 调度事件: {len(results)}")
+            print(f"  - 平均延迟: {metrics.get('avg_latency', 0):.2f}ms")
+            print(f"  - 平均资源利用率: {metrics.get('avg_utilization', 0):.1f}%")
+            print(f"  - 任务违反数: {metrics.get('total_violations', 0)}")
+            
         else:
             print("❌ 仍需进一步调优")
     else:
         print("❌ 调度失败，需要检查配置")
     
-    print(f"\n💡 如果测试成功，您可以在现有代码中使用:")
-    print(f"   from complete_resource_fix import apply_complete_resource_fix")
-    print(f"   apply_complete_resource_fix(your_scheduler)")
+    print(f"\n💡 Dragon4可视化说明:")
+    print(f"   📊 甘特图颜色: 🔴红(CRITICAL) 🟠橙(HIGH) 🟢绿(NORMAL) 🔵蓝(LOW)")
+    print(f"   🏷️  任务标识: DSP Runtime = 'X: TaskID', ACPU Runtime = 'TaskID'")
+    print(f"   🔄 Chrome Tracing: 打开 chrome://tracing 加载JSON文件")
+    
+    print(f"\n🔧 如需修复颜色显示:")
+    print(f"   python elegant_visualization_dragon4_fix.py")
 
 
 if __name__ == "__main__":

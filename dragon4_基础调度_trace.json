@@ -1,0 +1,654 @@
+{
+  "traceEvents": [
+    {
+      "name": "process_name",
+      "ph": "M",
+      "pid": 1,
+      "args": {
+        "name": "NPU"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "name": "NPU_0"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "name": "NPU_1"
+      }
+    },
+    {
+      "name": "process_name",
+      "ph": "M",
+      "pid": 2,
+      "args": {
+        "name": "DSP"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "name": "DSP_0"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 2,
+      "tid": 2,
+      "args": {
+        "name": "DSP_1"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 0,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleHigh",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 100,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "SimpleMedium",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 10000,
+      "dur": 5000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMixed",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 15000,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMixed",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 15100,
+      "dur": 20000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "SimpleLow",
+        "priority": "LOW"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 34200,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleHigh",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 50300,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMedium",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 68400,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleHigh",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 77500,
+      "dur": 5000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMixed",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 82500,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "SimpleMixed",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 100600,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMedium",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 101699,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "SimpleHigh",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 115799,
+      "dur": 20000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleLow",
+        "priority": "LOW"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 135899,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleHigh",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 144999,
+      "dur": 5000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMixed",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 149999,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "SimpleMixed",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 151099,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMedium",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 169199,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleHigh",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 201299,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMedium",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 203399,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "SimpleHigh",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 213399,
+      "dur": 5000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMixed",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 218399,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "SimpleMixed",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 216499,
+      "dur": 20000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleLow",
+        "priority": "LOW"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 237599,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleHigh",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 251699,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMedium",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 271799,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleHigh",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 280900,
+      "dur": 5000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMixed",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 285900,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "SimpleMixed",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 302000,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMedium",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 305100,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "SimpleHigh",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 317200,
+      "dur": 20000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleLow",
+        "priority": "LOW"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 339300,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleHigh",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 348400,
+      "dur": 5000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMixed",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 353400,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "SimpleMixed",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 352500,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMedium",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 372600,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleHigh",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 402700,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMedium",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 406800,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "SimpleHigh",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 416800,
+      "dur": 5000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMixed",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 421800,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "SimpleMixed",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 417900,
+      "dur": 20000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleLow",
+        "priority": "LOW"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 441000,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleHigh",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "T2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 453100,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMedium",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "T1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 475200,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "task": "SimpleHigh",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 484300,
+      "dur": 5000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "task": "SimpleMixed",
+        "priority": "NORMAL"
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 489300,
+      "dur": 10000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "task": "SimpleMixed",
+        "priority": "NORMAL"
+      }
+    }
+  ]
+}
