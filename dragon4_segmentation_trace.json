@@ -1,0 +1,357 @@
+{
+  "traceEvents": [
+    {
+      "name": "process_name",
+      "ph": "M",
+      "pid": 1,
+      "tid": 0,
+      "args": {
+        "name": "NPU"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "name": "NPU_0"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "name": "NPU_1"
+      }
+    },
+    {
+      "name": "process_name",
+      "ph": "M",
+      "pid": 2,
+      "tid": 0,
+      "args": {
+        "name": "DSP"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "name": "DSP_0"
+      }
+    },
+    {
+      "name": "T1_1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 0,
+      "dur": 15500,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "segment": "1/2",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T1_2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 15700,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "segment": "2/2",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T2_1",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 100,
+      "dur": 8550,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "priority": "NORMAL",
+        "segment": "1/3",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T2_2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 8850,
+      "dur": 8799,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "priority": "NORMAL",
+        "segment": "2/3",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T2_3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 17849,
+      "dur": 8249,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "priority": "NORMAL",
+        "segment": "3/3",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 25100,
+      "dur": 35000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "priority": "NORMAL",
+        "fps": 12,
+        "latency_req": 90
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 30000,
+      "dur": 20000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "LOW",
+        "fps": 10,
+        "latency_req": 100
+      }
+    },
+    {
+      "name": "T1_1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 50100,
+      "dur": 15499,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "segment": "1/2",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T1_2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 65800,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "segment": "2/2",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T2_1",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 67200,
+      "dur": 8549,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "priority": "NORMAL",
+        "segment": "1/3",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T2_2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 75950,
+      "dur": 8799,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "priority": "NORMAL",
+        "segment": "2/3",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T2_3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 84950,
+      "dur": 8250,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "priority": "NORMAL",
+        "segment": "3/3",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T1_1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 100300,
+      "dur": 15500,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "segment": "1/2",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T1_2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 116000,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "segment": "2/2",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 108399,
+      "dur": 35000,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "priority": "NORMAL",
+        "fps": 12,
+        "latency_req": 90
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 130500,
+      "dur": 20000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "LOW",
+        "fps": 10,
+        "latency_req": 100
+      }
+    },
+    {
+      "name": "T2_1",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 143399,
+      "dur": 8550,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "priority": "NORMAL",
+        "segment": "1/3",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T2_2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 152149,
+      "dur": 8800,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "priority": "NORMAL",
+        "segment": "2/3",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T2_3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 161149,
+      "dur": 8250,
+      "pid": 1,
+      "tid": 2,
+      "args": {
+        "priority": "NORMAL",
+        "segment": "3/3",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T1_1",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 150500,
+      "dur": 15500,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "segment": "1/2",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T1_2",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 166200,
+      "dur": 15000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "segment": "2/2",
+        "overhead_ms": "0.00"
+      }
+    },
+    {
+      "name": "T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 192600,
+      "dur": 35000,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "NORMAL",
+        "fps": 12,
+        "latency_req": 90
+      }
+    }
+  ]
+}
