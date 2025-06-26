@@ -4,6 +4,7 @@
       "name": "process_name",
       "ph": "M",
       "pid": 1,
+      "tid": 0,
       "args": {
         "name": "NPU"
       }
@@ -39,6 +40,7 @@
       "name": "process_name",
       "ph": "M",
       "pid": 2,
+      "tid": 0,
       "args": {
         "name": "DSP"
       }
@@ -62,7 +64,7 @@
       }
     },
     {
-      "name": "T1",
+      "name": "X: T1",
       "cat": "CRITICAL",
       "ph": "X",
       "ts": 0,
@@ -70,12 +72,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SafetyMonitor",
-        "priority": "CRITICAL"
+        "priority": "CRITICAL",
+        "fps": 30,
+        "latency_req": 30
       }
     },
     {
-      "name": "T2",
+      "name": "X: T2",
       "cat": "HIGH",
       "ph": "X",
       "ts": 0,
@@ -83,12 +86,13 @@
       "pid": 2,
       "tid": 1,
       "args": {
-        "task": "ObstacleDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
-      "name": "T2",
+      "name": "X: T2",
       "cat": "HIGH",
       "ph": "X",
       "ts": 8000,
@@ -96,8 +100,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "ObstacleDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
@@ -109,12 +114,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "LaneDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 15,
+        "latency_req": 60
       }
     },
     {
-      "name": "T4",
+      "name": "X: T4",
       "cat": "NORMAL",
       "ph": "X",
       "ts": 0,
@@ -122,12 +128,13 @@
       "pid": 2,
       "tid": 2,
       "args": {
-        "task": "TrafficSignRecog",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 80
       }
     },
     {
-      "name": "T4",
+      "name": "X: T4",
       "cat": "NORMAL",
       "ph": "X",
       "ts": 10000,
@@ -135,12 +142,13 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "TrafficSignRecog",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 80
       }
     },
     {
-      "name": "T4",
+      "name": "X: T4",
       "cat": "NORMAL",
       "ph": "X",
       "ts": 22000,
@@ -148,8 +156,9 @@
       "pid": 2,
       "tid": 2,
       "args": {
-        "task": "TrafficSignRecog",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 80
       }
     },
     {
@@ -161,8 +170,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "PedestrianTracking",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 100
       }
     },
     {
@@ -174,8 +184,9 @@
       "pid": 1,
       "tid": 3,
       "args": {
-        "task": "SceneUnderstanding",
-        "priority": "LOW"
+        "priority": "LOW",
+        "fps": 5,
+        "latency_req": 200
       }
     },
     {
@@ -187,12 +198,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "Task_8",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 8,
+        "latency_req": 150
       }
     },
     {
-      "name": "T9",
+      "name": "X: T9",
       "cat": "LOW",
       "ph": "X",
       "ts": 20000,
@@ -200,8 +212,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "Task_9",
-        "priority": "LOW"
+        "priority": "LOW",
+        "fps": 8,
+        "latency_req": 150
       }
     },
     {
@@ -213,12 +226,13 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "Task_10",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 8,
+        "latency_req": 150
       }
     },
     {
-      "name": "T7",
+      "name": "X: T7",
       "cat": "LOW",
       "ph": "X",
       "ts": 26000,
@@ -226,12 +240,13 @@
       "pid": 2,
       "tid": 1,
       "args": {
-        "task": "MapUpdate",
-        "priority": "LOW"
+        "priority": "LOW",
+        "fps": 2,
+        "latency_req": 500
       }
     },
     {
-      "name": "T7",
+      "name": "X: T7",
       "cat": "LOW",
       "ph": "X",
       "ts": 41000,
@@ -239,8 +254,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "MapUpdate",
-        "priority": "LOW"
+        "priority": "LOW",
+        "fps": 2,
+        "latency_req": 500
       }
     },
     {
@@ -252,12 +268,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "Task_11",
-        "priority": "LOW"
+        "priority": "LOW",
+        "fps": 8,
+        "latency_req": 150
       }
     },
     {
-      "name": "T1",
+      "name": "X: T1",
       "cat": "CRITICAL",
       "ph": "X",
       "ts": 41000,
@@ -265,12 +282,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SafetyMonitor",
-        "priority": "CRITICAL"
+        "priority": "CRITICAL",
+        "fps": 30,
+        "latency_req": 30
       }
     },
     {
-      "name": "T2",
+      "name": "X: T2",
       "cat": "HIGH",
       "ph": "X",
       "ts": 50000,
@@ -278,12 +296,13 @@
       "pid": 2,
       "tid": 2,
       "args": {
-        "task": "ObstacleDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
-      "name": "T2",
+      "name": "X: T2",
       "cat": "HIGH",
       "ph": "X",
       "ts": 58000,
@@ -291,8 +310,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "ObstacleDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
@@ -304,12 +324,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "LaneDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 15,
+        "latency_req": 60
       }
     },
     {
-      "name": "T1",
+      "name": "X: T1",
       "cat": "CRITICAL",
       "ph": "X",
       "ts": 74333,
@@ -317,12 +338,13 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "SafetyMonitor",
-        "priority": "CRITICAL"
+        "priority": "CRITICAL",
+        "fps": 30,
+        "latency_req": 30
       }
     },
     {
-      "name": "T2",
+      "name": "X: T2",
       "cat": "HIGH",
       "ph": "X",
       "ts": 100000,
@@ -330,12 +352,13 @@
       "pid": 2,
       "tid": 1,
       "args": {
-        "task": "ObstacleDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
-      "name": "T2",
+      "name": "X: T2",
       "cat": "HIGH",
       "ph": "X",
       "ts": 108000,
@@ -343,12 +366,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "ObstacleDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
-      "name": "T4",
+      "name": "X: T4",
       "cat": "NORMAL",
       "ph": "X",
       "ts": 100000,
@@ -356,12 +380,13 @@
       "pid": 2,
       "tid": 2,
       "args": {
-        "task": "TrafficSignRecog",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 80
       }
     },
     {
-      "name": "T4",
+      "name": "X: T4",
       "cat": "NORMAL",
       "ph": "X",
       "ts": 110000,
@@ -369,12 +394,13 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "TrafficSignRecog",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 80
       }
     },
     {
-      "name": "T4",
+      "name": "X: T4",
       "cat": "NORMAL",
       "ph": "X",
       "ts": 122000,
@@ -382,8 +408,9 @@
       "pid": 2,
       "tid": 2,
       "args": {
-        "task": "TrafficSignRecog",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 80
       }
     },
     {
@@ -395,12 +422,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "PedestrianTracking",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 100
       }
     },
     {
-      "name": "T1",
+      "name": "X: T1",
       "cat": "CRITICAL",
       "ph": "X",
       "ts": 107666,
@@ -408,8 +436,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "SafetyMonitor",
-        "priority": "CRITICAL"
+        "priority": "CRITICAL",
+        "fps": 30,
+        "latency_req": 30
       }
     },
     {
@@ -421,8 +450,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "LaneDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 15,
+        "latency_req": 60
       }
     },
     {
@@ -434,12 +464,13 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "Task_8",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 8,
+        "latency_req": 150
       }
     },
     {
-      "name": "T1",
+      "name": "X: T1",
       "cat": "CRITICAL",
       "ph": "X",
       "ts": 141000,
@@ -447,12 +478,13 @@
       "pid": 1,
       "tid": 3,
       "args": {
-        "task": "SafetyMonitor",
-        "priority": "CRITICAL"
+        "priority": "CRITICAL",
+        "fps": 30,
+        "latency_req": 30
       }
     },
     {
-      "name": "T9",
+      "name": "X: T9",
       "cat": "LOW",
       "ph": "X",
       "ts": 145000,
@@ -460,8 +492,9 @@
       "pid": 1,
       "tid": 3,
       "args": {
-        "task": "Task_9",
-        "priority": "LOW"
+        "priority": "LOW",
+        "fps": 8,
+        "latency_req": 150
       }
     },
     {
@@ -473,12 +506,13 @@
       "pid": 1,
       "tid": 3,
       "args": {
-        "task": "Task_10",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 8,
+        "latency_req": 150
       }
     },
     {
-      "name": "T2",
+      "name": "X: T2",
       "cat": "HIGH",
       "ph": "X",
       "ts": 150000,
@@ -486,12 +520,13 @@
       "pid": 2,
       "tid": 1,
       "args": {
-        "task": "ObstacleDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
-      "name": "T2",
+      "name": "X: T2",
       "cat": "HIGH",
       "ph": "X",
       "ts": 158000,
@@ -499,8 +534,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "ObstacleDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
@@ -512,12 +548,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "Task_11",
-        "priority": "LOW"
+        "priority": "LOW",
+        "fps": 8,
+        "latency_req": 150
       }
     },
     {
-      "name": "T1",
+      "name": "X: T1",
       "cat": "CRITICAL",
       "ph": "X",
       "ts": 174333,
@@ -525,12 +562,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SafetyMonitor",
-        "priority": "CRITICAL"
+        "priority": "CRITICAL",
+        "fps": 30,
+        "latency_req": 30
       }
     },
     {
-      "name": "T2",
+      "name": "X: T2",
       "cat": "HIGH",
       "ph": "X",
       "ts": 200000,
@@ -538,12 +576,13 @@
       "pid": 2,
       "tid": 1,
       "args": {
-        "task": "ObstacleDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
-      "name": "T2",
+      "name": "X: T2",
       "cat": "HIGH",
       "ph": "X",
       "ts": 208000,
@@ -551,8 +590,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "ObstacleDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
@@ -564,12 +604,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "LaneDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 15,
+        "latency_req": 60
       }
     },
     {
-      "name": "T4",
+      "name": "X: T4",
       "cat": "NORMAL",
       "ph": "X",
       "ts": 200000,
@@ -577,12 +618,13 @@
       "pid": 2,
       "tid": 2,
       "args": {
-        "task": "TrafficSignRecog",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 80
       }
     },
     {
-      "name": "T4",
+      "name": "X: T4",
       "cat": "NORMAL",
       "ph": "X",
       "ts": 210000,
@@ -590,12 +632,13 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "TrafficSignRecog",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 80
       }
     },
     {
-      "name": "T4",
+      "name": "X: T4",
       "cat": "NORMAL",
       "ph": "X",
       "ts": 222000,
@@ -603,8 +646,9 @@
       "pid": 2,
       "tid": 2,
       "args": {
-        "task": "TrafficSignRecog",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 80
       }
     },
     {
@@ -616,8 +660,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "PedestrianTracking",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 100
       }
     },
     {
@@ -629,12 +674,13 @@
       "pid": 1,
       "tid": 3,
       "args": {
-        "task": "SceneUnderstanding",
-        "priority": "LOW"
+        "priority": "LOW",
+        "fps": 5,
+        "latency_req": 200
       }
     },
     {
-      "name": "T1",
+      "name": "X: T1",
       "cat": "CRITICAL",
       "ph": "X",
       "ts": 212000,
@@ -642,12 +688,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SafetyMonitor",
-        "priority": "CRITICAL"
+        "priority": "CRITICAL",
+        "fps": 30,
+        "latency_req": 30
       }
     },
     {
-      "name": "T1",
+      "name": "X: T1",
       "cat": "CRITICAL",
       "ph": "X",
       "ts": 245333,
@@ -655,12 +702,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SafetyMonitor",
-        "priority": "CRITICAL"
+        "priority": "CRITICAL",
+        "fps": 30,
+        "latency_req": 30
       }
     },
     {
-      "name": "T2",
+      "name": "X: T2",
       "cat": "HIGH",
       "ph": "X",
       "ts": 250000,
@@ -668,12 +716,13 @@
       "pid": 2,
       "tid": 1,
       "args": {
-        "task": "ObstacleDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
-      "name": "T2",
+      "name": "X: T2",
       "cat": "HIGH",
       "ph": "X",
       "ts": 258000,
@@ -681,8 +730,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "ObstacleDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
@@ -694,8 +744,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "Task_8",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 8,
+        "latency_req": 150
       }
     },
     {
@@ -707,12 +758,13 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "LaneDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 15,
+        "latency_req": 60
       }
     },
     {
-      "name": "T9",
+      "name": "X: T9",
       "cat": "LOW",
       "ph": "X",
       "ts": 270000,
@@ -720,8 +772,9 @@
       "pid": 1,
       "tid": 3,
       "args": {
-        "task": "Task_9",
-        "priority": "LOW"
+        "priority": "LOW",
+        "fps": 8,
+        "latency_req": 150
       }
     },
     {
@@ -733,8 +786,9 @@
       "pid": 1,
       "tid": 3,
       "args": {
-        "task": "Task_10",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 8,
+        "latency_req": 150
       }
     },
     {
@@ -746,12 +800,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "Task_11",
-        "priority": "LOW"
+        "priority": "LOW",
+        "fps": 8,
+        "latency_req": 150
       }
     },
     {
-      "name": "T1",
+      "name": "X: T1",
       "cat": "CRITICAL",
       "ph": "X",
       "ts": 284666,
@@ -759,12 +814,13 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "SafetyMonitor",
-        "priority": "CRITICAL"
+        "priority": "CRITICAL",
+        "fps": 30,
+        "latency_req": 30
       }
     },
     {
-      "name": "T2",
+      "name": "X: T2",
       "cat": "HIGH",
       "ph": "X",
       "ts": 300000,
@@ -772,12 +828,13 @@
       "pid": 2,
       "tid": 1,
       "args": {
-        "task": "ObstacleDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
-      "name": "T2",
+      "name": "X: T2",
       "cat": "HIGH",
       "ph": "X",
       "ts": 308000,
@@ -785,12 +842,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "ObstacleDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
-      "name": "T4",
+      "name": "X: T4",
       "cat": "NORMAL",
       "ph": "X",
       "ts": 300000,
@@ -798,12 +856,13 @@
       "pid": 2,
       "tid": 2,
       "args": {
-        "task": "TrafficSignRecog",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 80
       }
     },
     {
-      "name": "T4",
+      "name": "X: T4",
       "cat": "NORMAL",
       "ph": "X",
       "ts": 310000,
@@ -811,12 +870,13 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "TrafficSignRecog",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 80
       }
     },
     {
-      "name": "T4",
+      "name": "X: T4",
       "cat": "NORMAL",
       "ph": "X",
       "ts": 322000,
@@ -824,8 +884,9 @@
       "pid": 2,
       "tid": 2,
       "args": {
-        "task": "TrafficSignRecog",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 80
       }
     },
     {
@@ -837,12 +898,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "PedestrianTracking",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 100
       }
     },
     {
-      "name": "T1",
+      "name": "X: T1",
       "cat": "CRITICAL",
       "ph": "X",
       "ts": 318000,
@@ -850,8 +912,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SafetyMonitor",
-        "priority": "CRITICAL"
+        "priority": "CRITICAL",
+        "fps": 30,
+        "latency_req": 30
       }
     },
     {
@@ -863,12 +926,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "LaneDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 15,
+        "latency_req": 60
       }
     },
     {
-      "name": "T2",
+      "name": "X: T2",
       "cat": "HIGH",
       "ph": "X",
       "ts": 350000,
@@ -876,12 +940,13 @@
       "pid": 2,
       "tid": 1,
       "args": {
-        "task": "ObstacleDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
-      "name": "T2",
+      "name": "X: T2",
       "cat": "HIGH",
       "ph": "X",
       "ts": 358000,
@@ -889,12 +954,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "ObstacleDetection",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
-      "name": "T1",
+      "name": "X: T1",
       "cat": "CRITICAL",
       "ph": "X",
       "ts": 351333,
@@ -902,12 +968,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SafetyMonitor",
-        "priority": "CRITICAL"
+        "priority": "CRITICAL",
+        "fps": 30,
+        "latency_req": 30
       }
     },
     {
-      "name": "T1",
+      "name": "X: T1",
       "cat": "CRITICAL",
       "ph": "X",
       "ts": 384666,
@@ -915,8 +982,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SafetyMonitor",
-        "priority": "CRITICAL"
+        "priority": "CRITICAL",
+        "fps": 30,
+        "latency_req": 30
       }
     },
     {
@@ -928,12 +996,13 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "Task_8",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 8,
+        "latency_req": 150
       }
     },
     {
-      "name": "T9",
+      "name": "X: T9",
       "cat": "LOW",
       "ph": "X",
       "ts": 395000,
@@ -941,8 +1010,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "Task_9",
-        "priority": "LOW"
+        "priority": "LOW",
+        "fps": 8,
+        "latency_req": 150
       }
     },
     {
@@ -954,8 +1024,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "Task_10",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 8,
+        "latency_req": 150
       }
     }
   ]

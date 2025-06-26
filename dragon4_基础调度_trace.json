@@ -4,6 +4,7 @@
       "name": "process_name",
       "ph": "M",
       "pid": 1,
+      "tid": 0,
       "args": {
         "name": "NPU"
       }
@@ -30,6 +31,7 @@
       "name": "process_name",
       "ph": "M",
       "pid": 2,
+      "tid": 0,
       "args": {
         "name": "DSP"
       }
@@ -61,8 +63,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleHigh",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 30,
+        "latency_req": 35
       }
     },
     {
@@ -74,8 +77,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "SimpleMedium",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
@@ -87,8 +91,9 @@
       "pid": 2,
       "tid": 1,
       "args": {
-        "task": "SimpleMixed",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 15,
+        "latency_req": 70
       }
     },
     {
@@ -100,8 +105,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleMixed",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 15,
+        "latency_req": 70
       }
     },
     {
@@ -113,8 +119,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "SimpleLow",
-        "priority": "LOW"
+        "priority": "LOW",
+        "fps": 10,
+        "latency_req": 100
       }
     },
     {
@@ -126,8 +133,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleHigh",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 30,
+        "latency_req": 35
       }
     },
     {
@@ -139,8 +147,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleMedium",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
@@ -152,8 +161,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleHigh",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 30,
+        "latency_req": 35
       }
     },
     {
@@ -165,8 +175,9 @@
       "pid": 2,
       "tid": 1,
       "args": {
-        "task": "SimpleMixed",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 15,
+        "latency_req": 70
       }
     },
     {
@@ -178,8 +189,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "SimpleMixed",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 15,
+        "latency_req": 70
       }
     },
     {
@@ -191,8 +203,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleMedium",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
@@ -204,8 +217,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "SimpleHigh",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 30,
+        "latency_req": 35
       }
     },
     {
@@ -217,8 +231,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleLow",
-        "priority": "LOW"
+        "priority": "LOW",
+        "fps": 10,
+        "latency_req": 100
       }
     },
     {
@@ -230,8 +245,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleHigh",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 30,
+        "latency_req": 35
       }
     },
     {
@@ -243,8 +259,9 @@
       "pid": 2,
       "tid": 1,
       "args": {
-        "task": "SimpleMixed",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 15,
+        "latency_req": 70
       }
     },
     {
@@ -256,8 +273,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "SimpleMixed",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 15,
+        "latency_req": 70
       }
     },
     {
@@ -269,8 +287,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleMedium",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
@@ -282,8 +301,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleHigh",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 30,
+        "latency_req": 35
       }
     },
     {
@@ -295,8 +315,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleMedium",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
@@ -308,8 +329,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "SimpleHigh",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 30,
+        "latency_req": 35
       }
     },
     {
@@ -321,8 +343,9 @@
       "pid": 2,
       "tid": 1,
       "args": {
-        "task": "SimpleMixed",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 15,
+        "latency_req": 70
       }
     },
     {
@@ -334,8 +357,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "SimpleMixed",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 15,
+        "latency_req": 70
       }
     },
     {
@@ -347,8 +371,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleLow",
-        "priority": "LOW"
+        "priority": "LOW",
+        "fps": 10,
+        "latency_req": 100
       }
     },
     {
@@ -360,8 +385,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleHigh",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 30,
+        "latency_req": 35
       }
     },
     {
@@ -373,8 +399,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleMedium",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
@@ -386,8 +413,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleHigh",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 30,
+        "latency_req": 35
       }
     },
     {
@@ -399,8 +427,9 @@
       "pid": 2,
       "tid": 1,
       "args": {
-        "task": "SimpleMixed",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 15,
+        "latency_req": 70
       }
     },
     {
@@ -412,8 +441,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "SimpleMixed",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 15,
+        "latency_req": 70
       }
     },
     {
@@ -425,8 +455,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleMedium",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
@@ -438,8 +469,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "SimpleHigh",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 30,
+        "latency_req": 35
       }
     },
     {
@@ -451,8 +483,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleLow",
-        "priority": "LOW"
+        "priority": "LOW",
+        "fps": 10,
+        "latency_req": 100
       }
     },
     {
@@ -464,8 +497,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleHigh",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 30,
+        "latency_req": 35
       }
     },
     {
@@ -477,8 +511,9 @@
       "pid": 2,
       "tid": 1,
       "args": {
-        "task": "SimpleMixed",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 15,
+        "latency_req": 70
       }
     },
     {
@@ -490,8 +525,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "SimpleMixed",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 15,
+        "latency_req": 70
       }
     },
     {
@@ -503,8 +539,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleMedium",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
@@ -516,8 +553,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleHigh",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 30,
+        "latency_req": 35
       }
     },
     {
@@ -529,8 +567,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleMedium",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
@@ -542,8 +581,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "SimpleHigh",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 30,
+        "latency_req": 35
       }
     },
     {
@@ -555,8 +595,9 @@
       "pid": 2,
       "tid": 1,
       "args": {
-        "task": "SimpleMixed",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 15,
+        "latency_req": 70
       }
     },
     {
@@ -568,8 +609,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "SimpleMixed",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 15,
+        "latency_req": 70
       }
     },
     {
@@ -581,8 +623,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleLow",
-        "priority": "LOW"
+        "priority": "LOW",
+        "fps": 10,
+        "latency_req": 100
       }
     },
     {
@@ -594,8 +637,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleHigh",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 30,
+        "latency_req": 35
       }
     },
     {
@@ -607,8 +651,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleMedium",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 20,
+        "latency_req": 50
       }
     },
     {
@@ -620,8 +665,9 @@
       "pid": 1,
       "tid": 1,
       "args": {
-        "task": "SimpleHigh",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "fps": 30,
+        "latency_req": 35
       }
     },
     {
@@ -633,8 +679,9 @@
       "pid": 2,
       "tid": 1,
       "args": {
-        "task": "SimpleMixed",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 15,
+        "latency_req": 70
       }
     },
     {
@@ -646,8 +693,9 @@
       "pid": 1,
       "tid": 2,
       "args": {
-        "task": "SimpleMixed",
-        "priority": "NORMAL"
+        "priority": "NORMAL",
+        "fps": 15,
+        "latency_req": 70
       }
     }
   ]
