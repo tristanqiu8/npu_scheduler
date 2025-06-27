@@ -7,13 +7,21 @@ from enums import ResourceType, TaskPriority, RuntimeType, SegmentationStrategy
 from task import NNTask
 from scheduler import MultiResourceScheduler
 from scheduling_optimizer import SchedulingOptimizer, SchedulingSearchSpace, SchedulingObjective
+from complete_resource_fix import apply_complete_resource_fix, validate_fixed_schedule
+from dragon4_segmentation_final_test import apply_simple_segmentation_patch
+
 
 
 def create_optimization_scenario():
     """Create a scenario for optimization"""
     # Create scheduler
     scheduler = MultiResourceScheduler(enable_segmentation=True)
+    # 应用资源冲突修复
+    apply_complete_resource_fix(scheduler)
     
+    # 如果启用了分段，应用分段补丁
+    if scheduler.enable_segmentation:
+        apply_simple_segmentation_patch(scheduler)
     # Add resources - 4 NPUs and 2 DSPs with different capabilities
     scheduler.add_npu("NPU_0", bandwidth=8.0)  # High-performance
     scheduler.add_npu("NPU_1", bandwidth=8.0)  # High-performance
@@ -429,7 +437,7 @@ if __name__ == "__main__":
     demonstrate_full_optimization()
     
     # Run constrained optimization demo
-    demonstrate_constraint_based_optimization()
+    # demonstrate_constraint_based_optimization()
     
     print("\n\n=== Key Insights ===")
     print("1. Priority assignment significantly affects scheduling order and resource allocation")

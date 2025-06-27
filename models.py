@@ -100,7 +100,7 @@ class ResourceSegment:
                 sub_id=f"{self.segment_id}_{i}",
                 resource_type=self.resource_type,
                 duration_table=sub_duration_table,
-                start_time=prev_position * self.get_duration(4.0),  # Use 4.0 as reference BW
+                start_time=prev_position * self.get_duration(40),  # Use 4.0 as reference BW
                 cut_overhead=cut_point.overhead_ms,
                 original_segment_id=self.segment_id
             )
@@ -120,7 +120,7 @@ class ResourceSegment:
                 sub_id=f"{self.segment_id}_{len(enabled_cut_points)}",
                 resource_type=self.resource_type,
                 duration_table=sub_duration_table,
-                start_time=prev_position * self.get_duration(4.0),
+                start_time=prev_position * self.get_duration(40),
                 cut_overhead=0.0,  # No overhead for final segment
                 original_segment_id=self.segment_id
             )

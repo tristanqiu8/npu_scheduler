@@ -17,6 +17,7 @@ from quick_fix_segmentation import apply_quick_segmentation_fix
 class Dragon4Config:
     """Dragon4硬件配置参数"""
     npu_bandwidth: float = 120.0  # 每个NPU的带宽（GOPS）
+    npu_count: int = 2
     dsp_count: int = 2           # DSP单元数量
     dsp_bandwidth: float = 40.0  # 每个DSP的带宽（GOPS）
     enable_segmentation: bool = True
@@ -42,8 +43,14 @@ class Dragon4System:
         )
         
         # 添加双NPU（相同带宽）
-        self.scheduler.add_npu("NPU_0", bandwidth=self.config.npu_bandwidth)
-        self.scheduler.add_npu("NPU_1", bandwidth=self.config.npu_bandwidth)
+        if self.config.npu_count > 2:
+            raise ValueError("Dragon4系统仅支持2个NPU")        
+        
+        for i in range(self.config.npu_count):
+            npu_name = f"NPU_{i}"
+            self.scheduler.add_npu(npu_name, bandwidth=self.config.npu_bandwidth)
+        # self.scheduler.add_npu("NPU_0", bandwidth=self.config.npu_bandwidth)
+        # self.scheduler.add_npu("NPU_1", bandwidth=self.config.npu_bandwidth)
         
         # 添加DSP单元
         for i in range(self.config.dsp_count):
