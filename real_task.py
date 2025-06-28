@@ -21,9 +21,9 @@ def create_real_tasks():
         (ResourceType.DSP, {40: 2.2}, 11.569, "dsp_s1"),
         (ResourceType.NPU, {20: 0.997, 40: 0.626, 120: 0.379}, 13.769, "npu_s3"),
         (ResourceType.DSP, {40: 1.5}, 15.269, "dsp_s2"),
-        (ResourceType.NPU, {20: 0.484, 40: 0.285, 120: 0.153}, 15.554, "npu_s4"),
-        (ResourceType.DSP, {40: 2}, 15.839, "dsp_s3"),  
-        (ResourceType.NPU, {40: 4.89}, 17.839, "npu_s5"), # fake one to match with linyu's data
+        (ResourceType.NPU, {20: 0.484, 40: 0.285, 120: 0.153}, 16.769, "npu_s4"),
+        (ResourceType.DSP, {40: 2}, 17.054, "dsp_s3"),  
+        (ResourceType.NPU, {40: 3.54}, 19.054, "npu_s5"), # fake one to match with linyu's data
     ])
     task1.set_performance_requirements(fps=25, latency=40)
     tasks.append(task1)
