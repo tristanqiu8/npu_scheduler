@@ -17,6 +17,7 @@ from task import NNTask
 from enums import ResourceType, TaskPriority, RuntimeType, SegmentationStrategy
 from real_task import create_real_tasks
 from models import SubSegment
+from minimal_fifo_fix import apply_minimal_fifo_fix
 
 # 导入修复
 from dragon4_single_core_fix import apply_single_core_dragon4_fix
@@ -119,8 +120,6 @@ def create_test_system():
     scheduler.add_dsp("DSP_0", bandwidth=40)
     
     # 应用RuntimeType修复 - 将T1改为DSP_Runtime实现绑定执行
-    from runtime_type_fix import apply_runtime_type_fix
-    apply_runtime_type_fix(scheduler)
     
     # 应用分段补丁
     apply_simple_segmentation_patch(scheduler)
@@ -229,9 +228,7 @@ def main():
         seg_info = "SEG" if seg_strategy != "NO_SEGMENTATION" else "NO SEG"
         print(f"  ✓ {task.task_id} {task.name}: {seg_info}")
     
-    # 3. 应用RuntimeType修复 - 将T1改为DSP_Runtime实现绑定执行（必须在添加任务后）
-    from runtime_type_fix import apply_runtime_type_fix
-    apply_runtime_type_fix(scheduler)
+    apply_minimal_fifo_fix(scheduler)  # 修复NPU冲突RetryClaude can make mistakes. Please double-check responses.
     
     # 4. 应用命名补丁
     patch_sub_segment_naming(scheduler)

@@ -25,15 +25,15 @@ def simple_test():
     print("1. 创建调度器...")
     scheduler = MultiResourceScheduler(
         enable_segmentation=True,
-        max_segmentation_overhead_ratio=0.15
+        max_segmentation_overhead_ratio=0.5
     )
     
     # 2. 添加资源
     print("2. 添加资源...")
-    scheduler.add_npu("NPU_0", bandwidth=120.0)
-    scheduler.add_npu("NPU_1", bandwidth=120.0)
-    scheduler.add_dsp("DSP_0", bandwidth=40.0)
-    scheduler.add_dsp("DSP_1", bandwidth=40.0)
+    scheduler.add_npu("NPU_0", bandwidth=40)
+    scheduler.add_npu("NPU_1", bandwidth=40)
+    scheduler.add_dsp("DSP_0", bandwidth=40)
+    scheduler.add_dsp("DSP_1", bandwidth=40)
     
     # 3. 应用基础补丁
     print("3. 应用基础补丁...")
