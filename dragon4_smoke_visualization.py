@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 运行 dragon4_segmentation_final_test.py 并生成可视化
-修复版本：解决NPU资源冲突问题
+修复版本：解决NPU资源冲突问题和 assigned_resources 类型错误
 """
 
 import sys
@@ -17,10 +17,17 @@ from task import NNTask
 from enums import ResourceType, TaskPriority, RuntimeType, SegmentationStrategy
 from real_task import create_real_tasks
 from models import SubSegment
-from minimal_fifo_fix import apply_minimal_fifo_fix
+
+# 使用修正后的 FIFO 修复
+try:
+    from minimal_fifo_fix_corrected import apply_minimal_fifo_fix
+except ImportError:
+    from minimal_fifo_fix import apply_minimal_fifo_fix
 
 # 导入修复
 from dragon4_single_core_fix import apply_single_core_dragon4_fix
+from fix_assigned_resources_type import apply_assigned_resources_type_fix
+from strict_resource_conflict_fix import apply_strict_resource_conflict_fix
 
 # 导入可视化
 from elegant_visualization import ElegantSchedulerVisualizer
@@ -127,6 +134,13 @@ def create_test_system():
     # 应用子段调度信息补丁
     apply_sub_segment_schedule_patch(scheduler)
     
+    # 应用 assigned_resources 类型修复（只修复资源查找，不覆盖调度方法）
+    apply_assigned_resources_type_fix(scheduler)
+    
+    # 修复资源利用率计算
+    from fix_visualization_utilization import fix_scheduler_utilization_calculation
+    fix_scheduler_utilization_calculation(scheduler)
+    
     print("✅ 系统创建完成")
     
     return scheduler
@@ -166,6 +180,11 @@ def generate_visualization(scheduler, results):
     
     # 增强子段信息以便可视化
     enhance_visualization_for_sub_segments(scheduler)
+    
+    # 修复分段统计和甘特图度量显示
+    from fix_gantt_metrics_display import fix_segmentation_stats, patch_gantt_metrics_display
+    fix_segmentation_stats(scheduler)
+    patch_gantt_metrics_display()
     
     try:
         # 创建可视化器
@@ -228,7 +247,16 @@ def main():
         seg_info = "SEG" if seg_strategy != "NO_SEGMENTATION" else "NO SEG"
         print(f"  ✓ {task.task_id} {task.name}: {seg_info}")
     
-    apply_minimal_fifo_fix(scheduler)  # 修复NPU冲突RetryClaude can make mistakes. Please double-check responses.
+    # 重要：apply_minimal_fifo_fix 必须在 apply_assigned_resources_type_fix 之后调用
+    # 因为它需要覆盖 priority_aware_schedule_with_segmentation 方法
+    apply_minimal_fifo_fix(scheduler)  # 修复NPU冲突
+    
+    # 应用严格的资源冲突修复（这会覆盖之前的调度方法）
+    apply_strict_resource_conflict_fix(scheduler)
+    
+    # 应用高FPS感知调度（处理T6的100FPS需求）
+    from high_fps_aware_scheduler import apply_high_fps_aware_scheduling
+    apply_high_fps_aware_scheduling(scheduler)
     
     # 4. 应用命名补丁
     patch_sub_segment_naming(scheduler)
@@ -242,7 +270,7 @@ def main():
         print(f"✅ 调度成功: {len(results)} 个事件")
         
         # 显示调度事件
-        print(f"调度{time_window}ms...")
+        print(f"\n调度事件（前25个）:")
         for i, event in enumerate(results[:25]):  # 显示前25个事件
             task = scheduler.tasks[event.task_id]
             print(f"  {event.start_time:6.1f}ms: [{task.priority.name:8}] {event.task_id} 开始")
@@ -253,8 +281,9 @@ def main():
         traceback.print_exc()
         return
     
-    # 6. 使用单核系统验证
-    is_valid = scheduler.validate_schedule() if hasattr(scheduler, 'validate_schedule') else False
+    # 6. 使用修复的验证器
+    from fixed_validation_and_metrics import validate_schedule_correctly
+    is_valid, validation_errors = validate_schedule_correctly(scheduler)
     
     # 7. 分析分段
     has_segmentation = analyze_results(scheduler, results)
@@ -262,7 +291,22 @@ def main():
     # 8. 生成可视化
     visualization_success = generate_visualization(scheduler, results)
     
-    # 9. 总结
+    # 9. 综合调度分析（替代之前的多个分析）
+    from comprehensive_schedule_analyzer import comprehensive_schedule_analysis
+    all_fps_satisfied = comprehensive_schedule_analysis(scheduler, time_window)
+    
+    # 10. 如果有任务未满足FPS，尝试迭代优化
+    if not all_fps_satisfied:
+        print("\n🔄 检测到部分任务未满足FPS要求，启动迭代优化...")
+        from iterative_fps_optimizer import apply_iterative_fps_optimization
+        optimized, final_rate = apply_iterative_fps_optimization(scheduler, time_window)
+        
+        if optimized:
+            print("\n✅ 迭代优化成功！重新生成可视化...")
+            # 重新生成可视化以反映优化后的结果
+            visualization_success = generate_visualization(scheduler, scheduler.schedule_history)
+    
+    # 11. 总结
     print(f"\n{'='*60}")
     print("测试总结")
     print(f"{'='*60}")
@@ -275,7 +319,14 @@ def main():
     if is_valid:
         print("✅ 调度结果无冲突")
     else:
-        print("❌ 调度结果存在资源冲突")
+        print(f"❌ 调度结果存在资源冲突: {len(validation_errors)} 个")
+        for err in validation_errors[:3]:
+            print(f"  - {err}")
+    
+    if all_fps_satisfied:
+        print("✅ 所有任务满足FPS要求")
+    else:
+        print("⚠️  部分任务未满足FPS要求（见上方分析）")
     
     if visualization_success:
         print("✅ 可视化生成成功")
@@ -284,12 +335,7 @@ def main():
     print("\n建议:")
     print("  - 查看生成的甘特图了解调度情况")
     print("  - 使用 Chrome Tracing 查看详细时间线")
-    print("  - 检查资源时间线调试信息")
-    
-    if not is_valid:
-        print("\n⚠️  重要提示:")
-        print("  资源冲突问题需要进一步调试")
-        print("  请检查dragon4_conflict_fix.py中的修复是否正确应用")
+    print("  - 参考FPS分析报告优化任务配置")
 
 
 if __name__ == "__main__":

@@ -90,7 +90,7 @@ def create_real_tasks():
     
     #任务6： re_id
     task6 = NNTask("T6", "reid",
-                   priority=TaskPriority.NORMAL,
+                   priority=TaskPriority.HIGH,
                    runtime_type=RuntimeType.ACPU_RUNTIME,
                    segmentation_strategy=SegmentationStrategy.NO_SEGMENTATION)
     task6.set_npu_only({40: 0.778, 120: 0.631}, "main")
