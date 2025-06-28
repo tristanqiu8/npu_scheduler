@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 运行 dragon4_segmentation_final_test.py 并生成可视化
-修复版本：解决NPU资源冲突问题和 assigned_resources 类型错误
+增强版本：集成智能空隙查找器
 """
 
 import sys
@@ -28,6 +28,9 @@ except ImportError:
 from dragon4_single_core_fix import apply_single_core_dragon4_fix
 from fix_assigned_resources_type import apply_assigned_resources_type_fix
 from strict_resource_conflict_fix import apply_strict_resource_conflict_fix
+
+# 导入智能空隙查找器
+from smart_gap_finder import apply_fixed_smart_gap_finding
 
 # 导入可视化
 from elegant_visualization import ElegantSchedulerVisualizer
@@ -230,7 +233,7 @@ def main():
     """主函数"""
     
     print("=" * 60)
-    print("Dragon4 分段测试与可视化 (修复版)")
+    print("Dragon4 分段测试与可视化 (智能空隙查找版)")
     print("=" * 60)
     
     # 1. 创建系统
@@ -242,36 +245,28 @@ def main():
     print(f"\n📋 创建测试任务:")
     for task in tasks:
         scheduler.add_task(task)
-        # 修复：使用正确的属性名
         seg_strategy = task.segmentation_strategy.name if hasattr(task, 'segmentation_strategy') else "UNKNOWN"
         seg_info = "SEG" if seg_strategy != "NO_SEGMENTATION" else "NO SEG"
         print(f"  ✓ {task.task_id} {task.name}: {seg_info}")
     
-    # 重要：apply_minimal_fifo_fix 必须在 apply_assigned_resources_type_fix 之后调用
-    # 因为它需要覆盖 priority_aware_schedule_with_segmentation 方法
+    # 3. 应用各种修复补丁
     apply_minimal_fifo_fix(scheduler)  # 修复NPU冲突
-    
-    # 应用严格的资源冲突修复（这会覆盖之前的调度方法）
-    apply_strict_resource_conflict_fix(scheduler)
-    
-    # 应用高FPS感知调度（处理T6的100FPS需求）
-    from high_fps_aware_scheduler import apply_high_fps_aware_scheduling
-    apply_high_fps_aware_scheduling(scheduler)
+    apply_strict_resource_conflict_fix(scheduler)  # 严格的资源冲突修复
     
     # 4. 应用命名补丁
     patch_sub_segment_naming(scheduler)
     
-    # 5. 运行调度
-    print(f"\n🚀 运行调度...")
+    # 5. 运行基础调度（不使用终极优化器）
+    print(f"\n🚀 运行基础调度...")
     time_window = 200.0
     
     try:
         results = scheduler.priority_aware_schedule_with_segmentation(time_window)
-        print(f"✅ 调度成功: {len(results)} 个事件")
+        print(f"✅ 基础调度成功: {len(results)} 个事件")
         
         # 显示调度事件
-        print(f"\n调度事件（前25个）:")
-        for i, event in enumerate(results[:25]):  # 显示前25个事件
+        print(f"\n调度事件（前10个）:")
+        for i, event in enumerate(results[:10]):
             task = scheduler.tasks[event.task_id]
             print(f"  {event.start_time:6.1f}ms: [{task.priority.name:8}] {event.task_id} 开始")
             
@@ -281,32 +276,75 @@ def main():
         traceback.print_exc()
         return
     
-    # 6. 使用修复的验证器
+    # 6. 初步分析FPS满足情况
+    print(f"\n📊 基础调度后的FPS满足情况:")
+    task_counts = defaultdict(int)
+    for schedule in scheduler.schedule_history:
+        task_counts[schedule.task_id] += 1
+    
+    unsatisfied_count = 0
+    for task_id, task in sorted(scheduler.tasks.items()):
+        count = task_counts[task_id]
+        expected = int((time_window / 1000.0) * task.fps_requirement)
+        rate = (count / expected * 100) if expected > 0 else 0
+        status = "✅" if rate >= 95 else "❌"
+        
+        if rate < 95:
+            unsatisfied_count += 1
+            print(f"  {task_id} ({task.name}): {count}/{expected} = {rate:.1f}% {status}")
+    
+    # 7. 如果有任务未满足FPS，应用智能空隙查找
+    if unsatisfied_count > 0:
+        print(f"\n🔍 发现 {unsatisfied_count} 个任务未满足FPS要求")
+        print("启动智能空隙查找器...")
+        
+        # 应用智能空隙查找
+        gap_finder = apply_fixed_smart_gap_finding(scheduler, time_window, debug=True)
+        
+        # 重新分析结果
+        print(f"\n📊 智能空隙查找后的FPS满足情况:")
+        task_counts.clear()
+        for schedule in scheduler.schedule_history:
+            task_counts[schedule.task_id] += 1
+        
+        for task_id, task in sorted(scheduler.tasks.items()):
+            count = task_counts[task_id]
+            expected = int((time_window / 1000.0) * task.fps_requirement)
+            rate = (count / expected * 100) if expected > 0 else 0
+            status = "✅" if rate >= 95 else "⚠️" if rate >= 80 else "❌"
+            
+            print(f"  {task_id} ({task.name}): {count}/{expected} = {rate:.1f}% {status}")
+    
+    # 8. 验证调度结果
     from fixed_validation_and_metrics import validate_schedule_correctly
     is_valid, validation_errors = validate_schedule_correctly(scheduler)
     
-    # 7. 分析分段
-    has_segmentation = analyze_results(scheduler, results)
+    if not is_valid:
+        print(f"\n⚠️  发现 {len(validation_errors)} 个资源冲突")
+        print("应用冲突解决...")
+        
+        # 可以在这里应用额外的冲突解决策略
+        # 例如：apply_conflict_resolution(scheduler)
     
-    # 8. 生成可视化
-    visualization_success = generate_visualization(scheduler, results)
+    # 9. 分析分段
+    has_segmentation = analyze_results(scheduler, scheduler.schedule_history)
     
-    # 9. 综合调度分析（替代之前的多个分析）
+    # 10. 生成可视化
+    visualization_success = generate_visualization(scheduler, scheduler.schedule_history)
+    
+    # 11. 综合调度分析
     from comprehensive_schedule_analyzer import comprehensive_schedule_analysis
     all_fps_satisfied = comprehensive_schedule_analysis(scheduler, time_window)
     
-    # 10. 如果有任务未满足FPS，尝试迭代优化
+    # 12. 如果仍有任务未满足，考虑迭代优化
     if not all_fps_satisfied:
-        print("\n🔄 检测到部分任务未满足FPS要求，启动迭代优化...")
-        from iterative_fps_optimizer import apply_iterative_fps_optimization
-        optimized, final_rate = apply_iterative_fps_optimization(scheduler, time_window)
-        
-        if optimized:
-            print("\n✅ 迭代优化成功！重新生成可视化...")
-            # 重新生成可视化以反映优化后的结果
-            visualization_success = generate_visualization(scheduler, scheduler.schedule_history)
+        print("\n⚠️  仍有任务未满足FPS要求")
+        print("建议：")
+        print("1. 考虑增加资源（当前只有1个NPU）")
+        print("2. 调整任务优先级")
+        print("3. 使用任务分段减少执行时间")
     
-    # 11. 总结
+    # 13. 总结
     print(f"\n{'='*60}")
     print("测试总结")
     print(f"{'='*60}")

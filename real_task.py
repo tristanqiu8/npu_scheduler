@@ -23,7 +23,7 @@ def create_real_tasks():
         (ResourceType.DSP, {40: 1.5}, 15.269, "dsp_s2"),
         (ResourceType.NPU, {20: 0.484, 40: 0.285, 120: 0.153}, 16.769, "npu_s4"),
         (ResourceType.DSP, {40: 2}, 17.054, "dsp_s3"),  
-        (ResourceType.NPU, {40: 3.54}, 19.054, "npu_s5"), # fake one to match with linyu's data
+        # (ResourceType.NPU, {40: 3.54}, 19.054, "npu_s5"), # fake one to match with linyu's data
     ])
     task1.set_performance_requirements(fps=25, latency=40)
     tasks.append(task1)
@@ -80,7 +80,7 @@ def create_real_tasks():
     
     #任务5： tk_search
     task5 = NNTask("T5", "tk_search",
-                   priority=TaskPriority.HIGH,
+                   priority=TaskPriority.NORMAL,
                    runtime_type=RuntimeType.ACPU_RUNTIME,
                    segmentation_strategy=SegmentationStrategy.NO_SEGMENTATION)
     task5.set_npu_only({40: 0.755, 120: 0.558}, "main")
