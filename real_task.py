@@ -10,15 +10,15 @@ def create_real_tasks():
     seg_overhead = 0.15  # 分段开销比例
     # 任务1: cnntk_template
     task1 = NNTask("T1", "MOTR",
-                   priority=TaskPriority.NORMAL,
-                   runtime_type=RuntimeType.ACPU_RUNTIME,
+                   priority=TaskPriority.CRITICAL,
+                   runtime_type=RuntimeType.DSP_RUNTIME,
                    segmentation_strategy=SegmentationStrategy.NO_SEGMENTATION)
     task1.set_dsp_npu_sequence([
         (ResourceType.NPU, {20: 0.652, 40: 0.410, 120: 0.249}, 0, "npu_s0"),
         (ResourceType.DSP, {40: 1.2}, 0.410, "dsp_s0"),
         (ResourceType.NPU, {20: 0.998, 40: 0.626, 120: 0.379}, 1.61, "npu_s1"),
-        (ResourceType.NPU, {20: 16.643, 40: 9.333, 120: 5.147}, 10.943, "npu_s2"),
-        (ResourceType.DSP, {40: 2.2}, 13.143, "dsp_s1"),
+        (ResourceType.NPU, {20: 16.643, 40: 9.333, 120: 5.147}, 2.236, "npu_s2"),
+        (ResourceType.DSP, {40: 2.2}, 11.569, "dsp_s1"),
         (ResourceType.NPU, {20: 0.997, 40: 0.626, 120: 0.379}, 13.769, "npu_s3"),
         (ResourceType.DSP, {40: 1.5}, 15.269, "dsp_s2"),
         (ResourceType.NPU, {20: 0.484, 40: 0.285, 120: 0.153}, 15.554, "npu_s4"),
@@ -70,7 +70,7 @@ def create_real_tasks():
     
     #任务4： tk_template
     task4 = NNTask("T4", "tk_temp",
-                   priority=TaskPriority.CRITICAL,
+                   priority=TaskPriority.NORMAL,
                    runtime_type=RuntimeType.ACPU_RUNTIME,
                    segmentation_strategy=SegmentationStrategy.NO_SEGMENTATION)
     task4.set_npu_only({40: 0.364, 120: 0.296}, "main")
