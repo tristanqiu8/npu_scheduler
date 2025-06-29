@@ -1,0 +1,1146 @@
+{
+  "traceEvents": [
+    {
+      "name": "process_name",
+      "ph": "M",
+      "pid": 1,
+      "tid": 0,
+      "args": {
+        "name": "NPU"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "name": "NPU_0"
+      }
+    },
+    {
+      "name": "process_name",
+      "ph": "M",
+      "pid": 2,
+      "tid": 0,
+      "args": {
+        "name": "DSP"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "name": "DSP_0"
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 0,
+      "dur": 410,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 410,
+      "dur": 1200,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 1610,
+      "dur": 626,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 2236,
+      "dur": 9333,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 11569,
+      "dur": 2200,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 13769,
+      "dur": 626,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 15269,
+      "dur": 1500,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 16769,
+      "dur": 285,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 17054,
+      "dur": 2000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 41300,
+      "dur": 410,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 41710,
+      "dur": 1200,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 42910,
+      "dur": 626,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 43536,
+      "dur": 9333,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 52869,
+      "dur": 2200,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 55069,
+      "dur": 626,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 56569,
+      "dur": 1500,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 58069,
+      "dur": 285,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 58354,
+      "dur": 2000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 81399,
+      "dur": 410,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 81809,
+      "dur": 1200,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 83009,
+      "dur": 626,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 83635,
+      "dur": 9333,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 92968,
+      "dur": 2200,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 95168,
+      "dur": 626,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 96668,
+      "dur": 1500,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 98168,
+      "dur": 285,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 98453,
+      "dur": 2000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 121499,
+      "dur": 410,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 121909,
+      "dur": 1200,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 123109,
+      "dur": 626,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 123735,
+      "dur": 9333,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 133068,
+      "dur": 2200,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 135268,
+      "dur": 626,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 136768,
+      "dur": 1500,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 138268,
+      "dur": 285,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 138553,
+      "dur": 2000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 162399,
+      "dur": 410,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 162809,
+      "dur": 1200,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 164009,
+      "dur": 626,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 164635,
+      "dur": 9333,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 173968,
+      "dur": 2200,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 176168,
+      "dur": 626,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 177668,
+      "dur": 1500,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 179168,
+      "dur": 285,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T1",
+      "cat": "CRITICAL",
+      "ph": "X",
+      "ts": 179453,
+      "dur": 2000,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "CRITICAL",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "T5",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 181453,
+      "dur": 755,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "T5",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 40500,
+      "dur": 755,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "T5",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 80599,
+      "dur": 755,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "T5",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 120699,
+      "dur": 755,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "T5",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 160799,
+      "dur": 755,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "T6",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 182208,
+      "dur": 778,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 100,
+        "latency_req": 10
+      }
+    },
+    {
+      "name": "T6",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 60400,
+      "dur": 778,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 100,
+        "latency_req": 10
+      }
+    },
+    {
+      "name": "T6",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 100499,
+      "dur": 778,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 100,
+        "latency_req": 10
+      }
+    },
+    {
+      "name": "T6",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 140599,
+      "dur": 778,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 100,
+        "latency_req": 10
+      }
+    },
+    {
+      "name": "T6",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 181499,
+      "dur": 778,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 100,
+        "latency_req": 10
+      }
+    },
+    {
+      "name": "T7",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 182986,
+      "dur": 3096,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "T7",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 61200,
+      "dur": 3096,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "T7",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 101299,
+      "dur": 3096,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "T7",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 141399,
+      "dur": 3096,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "T7",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 182299,
+      "dur": 3096,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T8",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 186082,
+      "dur": 995,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T8",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 187077,
+      "dur": 656,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T8",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 64300,
+      "dur": 995,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T8",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 65295,
+      "dur": 656,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T8",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 104399,
+      "dur": 995,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T8",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 105394,
+      "dur": 656,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T8",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 144499,
+      "dur": 995,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T8",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 145494,
+      "dur": 656,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T8",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 185399,
+      "dur": 995,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T8",
+      "cat": "HIGH",
+      "ph": "X",
+      "ts": 186394,
+      "dur": 656,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "HIGH",
+        "fps": 25,
+        "latency_req": 40
+      }
+    },
+    {
+      "name": "X: T2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 187733,
+      "dur": 12710,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 100
+      }
+    },
+    {
+      "name": "X: T2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 200443,
+      "dur": 3423,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 100
+      }
+    },
+    {
+      "name": "X: T2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 146199,
+      "dur": 12710,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 100
+      }
+    },
+    {
+      "name": "X: T2",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 158909,
+      "dur": 3423,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 100
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 66000,
+      "dur": 3237,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 100
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 69237,
+      "dur": 1957,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 100
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 187099,
+      "dur": 3237,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 100
+      }
+    },
+    {
+      "name": "X: T3",
+      "cat": "NORMAL",
+      "ph": "X",
+      "ts": 190336,
+      "dur": 1957,
+      "pid": 2,
+      "tid": 1,
+      "args": {
+        "priority": "NORMAL",
+        "fps": 10,
+        "latency_req": 100
+      }
+    },
+    {
+      "name": "T4",
+      "cat": "LOW",
+      "ph": "X",
+      "ts": 11599,
+      "dur": 364,
+      "pid": 1,
+      "tid": 1,
+      "args": {
+        "priority": "LOW",
+        "fps": 5,
+        "latency_req": 200
+      }
+    }
+  ]
+}
